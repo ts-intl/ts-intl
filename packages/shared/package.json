@@ -6,7 +6,8 @@
   "license": "MIT",
   "homepage": "",
   "scripts": {
-    "lint": "eslint *.ts*"
+    "lint": "eslint *.ts*",
+    "ts-check": "tsc --noEmit"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
