@@ -14,11 +14,7 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
-    "pretty": true,
-    "paths": {
-      "@ui/*": ["ui/src/*"],
-      "@public/*": ["ui/public/*"]
-    }
+    "pretty": true
   },
   // "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/*.spec.tsx", "**/*.test.tsx"],
   "watchOptions": {
