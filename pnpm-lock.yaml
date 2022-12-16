@@ -68,6 +68,28 @@ importers:
       eslint-config-custom: link:../../packages/eslint-config-custom
       tsconfig: link:../../packages/tsconfig
 
+  packages/dependency:
+    specifiers:
+      eslint-config-custom: workspace:*
+      shared: workspace:*
+      tsconfig: workspace:*
+    dependencies:
+      shared: link:../shared
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+
+  packages/dictionary:
+    specifiers:
+      eslint-config-custom: workspace:*
+      shared: workspace:*
+      tsconfig: workspace:*
+    dependencies:
+      shared: link:../shared
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+
   packages/eslint-config-custom:
     specifiers:
       '@typescript-eslint/eslint-plugin': ^5.46.1
@@ -95,6 +117,25 @@ importers:
       eslint-plugin-react-hooks: 4.6.0
       eslint-plugin-simple-import-sort: 8.0.0
       eslint-plugin-unused-imports: 2.0.0_skxyrozbyietuswm2jcabropsi
+
+  packages/eslint-plugin-ts-intl:
+    specifiers:
+      eslint-config-custom: workspace:*
+      shared: workspace:*
+      tsconfig: workspace:*
+    dependencies:
+      shared: link:../shared
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+
+  packages/shared:
+    specifiers:
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/tsconfig:
     specifiers: {}

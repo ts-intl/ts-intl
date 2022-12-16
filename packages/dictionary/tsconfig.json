@@ -1,0 +1,14 @@
+// {
+//   "extends": "tsconfig/node.json",
+//   "include": ["./src"],
+//   "compilerOptions": {
+//     "jsx": "react-jsx",
+//     "rootDir": "src",
+//     "outDir": "./dist/esm"
+//   }
+// }
+{
+  "extends": "tsconfig/nextjs.json",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
