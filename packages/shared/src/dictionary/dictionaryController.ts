@@ -1,8 +1,14 @@
 import { Dictionary } from '../types';
 import { hasPathToLeaf, traverseLeaves } from './utils';
 
+type Resolved = {
+  multiSources?: boolean;
+  localePath?: string;
+  dictionary?: Dictionary;
+};
+
 export interface DictionaryResolver {
-  (): { multiSources?: boolean; localePath?: string; dictionary?: Dictionary };
+  (): Promise<Resolved> | Resolved;
 }
 
 export interface DictionaryWatcher {
@@ -17,9 +23,11 @@ export class DictionaryController {
   public dictionary: Dictionary = {};
   public closeWatcher?: () => void;
 
-  constructor(resolver: DictionaryResolver, watcher?: DictionaryWatcher) {
-    const { multiSources, localePath, dictionary } = resolver();
-    this.dictionary = dictionary ?? {};
+  constructor(
+    { multiSources, localePath, dictionary }: Resolved,
+    watcher?: DictionaryWatcher
+  ) {
+    this.dictionary = dictionary ?? this.dictionary;
     this.closeWatcher = watcher?.({
       multiSources,
       localePath,
@@ -62,3 +70,10 @@ export class DictionaryController {
     });
   };
 }
+
+export const getDictionaryController = async (
+  resolver: DictionaryResolver,
+  watcher?: DictionaryWatcher
+) => {
+  return new DictionaryController(await resolver(), watcher);
+};

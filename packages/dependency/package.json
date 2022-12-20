@@ -10,9 +10,11 @@
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {
+    "madge": "^5.0.1",
     "shared": "workspace:*"
   },
   "devDependencies": {
+    "@types/madge": "^5.0.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   }

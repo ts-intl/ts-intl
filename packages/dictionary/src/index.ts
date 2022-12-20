@@ -1,1 +1,1 @@
-export * from './genTranslationDict';
+export * from './extractDictionaryFs';

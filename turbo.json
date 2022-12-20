@@ -15,6 +15,9 @@
       // https://github.com/vercel/turborepo/issues/986#issuecomment-1091384632
       "cache": false
     },
-    "ts-check": {}
+    "ts-check": {},
+    "test": {
+      "outputs": []
+    }
   }
 }

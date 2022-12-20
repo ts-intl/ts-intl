@@ -1,42 +1,13 @@
 import { resolve } from 'path';
 
-import {
-  genTranslationDict,
-  genTranslationDictFs,
-} from '../genTranslationDict';
-import { buildTrieByNSPath } from '../utils';
-import base from './json/en.json';
-import target from './json/ko.json';
+import { extractDictionaryFs } from './extractDictionaryFs';
 
-const jsonPath = resolve(__dirname, './json');
-const folderPath = resolve(__dirname, './folder');
+const jsonPath = resolve(__dirname, './test/json');
+const folderPath = resolve(__dirname, './test/folder');
 
-describe('i18n-utils', () => {
-  it('genTranslationDict', () => {
-    expect(
-      JSON.stringify(
-        genTranslationDict(
-          target,
-          base,
-          'en',
-          buildTrieByNSPath(['a', ['c', 'g']])
-        )
-      )
-    ).toBe('{"a":{"c":{"d":"dd","e":"e"},"g":"g"}}');
-    expect(
-      JSON.stringify(
-        genTranslationDict(
-          target,
-          base,
-          'en',
-          buildTrieByNSPath(['a', ['c', ['d'], 'g']])
-        )
-      )
-    ).toBe('{"a":{"c":{"d":"dd"},"g":"g"}}');
-  });
-
-  it('genTranslationDictFs', async () => {
-    const dict = await genTranslationDictFs({
+describe('extractDictionaryFs', () => {
+  it('json', async () => {
+    const dict = await extractDictionaryFs({
       root: jsonPath,
       lng: 'ko',
       fallbackLng: 'en',
@@ -48,8 +19,8 @@ describe('i18n-utils', () => {
     expect(JSON.stringify(dict)).toBe('{"a":{"c":{"d":"dd","e":"e"},"g":"g"}}'); // exclude a.b
   });
 
-  it('getTranslationDictFolder', async () => {
-    const dict1 = await genTranslationDictFs({
+  it('folder', async () => {
+    const dict1 = await extractDictionaryFs({
       root: folderPath,
       lng: 'ko',
       fallbackLng: 'en',
@@ -62,7 +33,7 @@ describe('i18n-utils', () => {
       '{"a":{"c":{"d":"dd","e":"e"},"g":"g"}}'
     ); // exclude a.b
 
-    const dict2 = await genTranslationDictFs({
+    const dict2 = await extractDictionaryFs({
       root: folderPath,
       lng: 'ko',
       fallbackLng: 'en',
@@ -75,7 +46,7 @@ describe('i18n-utils', () => {
       '{"a":{"c":{"d":"dd","e":"e"},"g":"g"},"b":{"z":"zz"}}'
     );
 
-    const dict3 = await genTranslationDictFs({
+    const dict3 = await extractDictionaryFs({
       root: folderPath,
       lng: 'ko',
       fallbackLng: 'en',
