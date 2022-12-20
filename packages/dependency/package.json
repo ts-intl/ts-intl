@@ -7,7 +7,8 @@
   "homepage": "",
   "scripts": {
     "lint": "eslint *.ts*",
-    "ts-check": "tsc --noEmit"
+    "ts-check": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {
     "madge": "^5.0.1",

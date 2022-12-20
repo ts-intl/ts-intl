@@ -1,48 +1,13 @@
 import {
   CallExpression,
-  createSourceFile,
-  forEachChild,
   Identifier,
   Node,
-  NoSubstitutionTemplateLiteral,
   PropertyAccessExpression,
-  ScriptTarget,
-  StringLiteral,
   SyntaxKind,
 } from 'typescript';
+import { ExtractIntlKeysOpts } from '../../types'
 
-export type CollectKeysOpts = {
-  funcNamePattern: string;
-  hookNamePattern?: string;
-  richNamePattern?: string;
-  argIdx?: number;
-};
-
-export const collectKeys = (sourceText: string, opts: CollectKeysOpts) => {
-  const sourceFile = createSourceFile(
-    'source.tsx',
-    sourceText,
-    ScriptTarget.Latest
-  );
-
-  const res = new Set<string>();
-
-  const traverse = (node: Node) => {
-    if (node.kind === SyntaxKind.CallExpression) {
-      const key = extractKeyArg(node as CallExpression, opts.argIdx);
-      if (key && isTargetCall(node as CallExpression, opts)) {
-        res.add(key.text);
-      }
-    }
-    forEachChild(node, traverse);
-  };
-
-  traverse(sourceFile);
-
-  return [...res];
-};
-
-const isTargetCall = (node: CallExpression, opts: CollectKeysOpts) => {
+export const isIntlCall = (node: CallExpression, opts: ExtractIntlKeysOpts) => {
   const {
     funcNamePattern = '',
     hookNamePattern = '',
@@ -83,7 +48,8 @@ const isTargetCall = (node: CallExpression, opts: CollectKeysOpts) => {
     }
     return true;
   }
-  return undefined;
+
+  return false;
 };
 
 const testName = (node: Node, regexp: RegExp) => {
@@ -91,19 +57,4 @@ const testName = (node: Node, regexp: RegExp) => {
     node.kind === SyntaxKind.Identifier &&
     regexp.test((node as Identifier).text)
   );
-};
-
-const extractKeyArg = (
-  node: CallExpression,
-  argIdx = 0
-): StringLiteral | NoSubstitutionTemplateLiteral | undefined => {
-  const keyArg = node.arguments[argIdx];
-  if (
-    [
-      SyntaxKind.StringLiteral,
-      SyntaxKind.NoSubstitutionTemplateLiteral,
-    ].includes(keyArg?.kind)
-  )
-    return keyArg as StringLiteral | NoSubstitutionTemplateLiteral;
-  return;
 };

@@ -1,8 +1,8 @@
 import { Deleted, IAction } from '../types';
-import { excludeModuleOfGraph } from '../utils';
+import { deleteModule } from '../utils';
 
 export const deletedAction: IAction<Deleted> = async ({ from }, opts, ctx) => {
-  ctx.deps = await excludeModuleOfGraph(from, ctx.deps);
-  delete ctx.pkMap[from];
+  ctx.graph = await deleteModule(from, ctx.graph);
+  delete ctx.pathIntlKeysMap[from];
   return ctx;
 };

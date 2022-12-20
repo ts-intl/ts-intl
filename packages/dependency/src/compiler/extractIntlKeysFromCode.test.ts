@@ -1,13 +1,13 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
-import { collectKeys } from '../collectKeys';
+import { extractIntlKeysFromCode } from './extractIntlKeysFromCode';
 
-const codeA = readFileSync(resolve(__dirname, './templates/a.tsx'), 'utf-8');
+const codeA = readFileSync(resolve(__dirname, './test/a.tsx'), 'utf-8');
 
-describe('collectKeys', () => {
-  it('a', () => {
-    const keys = collectKeys(codeA, {
+describe('extractIntlKeys', () => {
+  it('template a', () => {
+    const keys = extractIntlKeysFromCode(codeA, {
       funcNamePattern: '^(t|\\$t)$',
       hookNamePattern: '^useTranslations$',
       richNamePattern: '^rich$',

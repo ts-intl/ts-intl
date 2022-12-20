@@ -4,12 +4,12 @@ import { IContext, IOpts } from '../types';
 import { offsprings } from './madge';
 
 /**
- * collect deps of given path, no recursion
+ * collect graph of given path, no recursion
  * @param module
  * @param madgeConfig
  * @returns
  */
-export const collectDepsNoRecursion = async (
+export const getDependenciesNoRecursion = async (
   module: string,
   madgeConfig: IOpts['madgeConfig']
 ) => {
@@ -20,9 +20,12 @@ export const collectDepsNoRecursion = async (
   return instance.obj()[module] || [];
 };
 
-export const genDepsOfEntries = (entries: string[], deps: IContext['deps']) => {
-  return entries.reduce((all, entry) => {
-    offsprings(entry, deps).forEach((v) => (all[v] = true));
+export const getModulesDependencies = (
+  modules: string[],
+  graph: IContext['graph']
+) => {
+  return modules.reduce((all, module) => {
+    offsprings(module, graph).forEach((v) => (all[v] = true));
     return all;
   }, {} as Record<string, boolean>);
 };
@@ -30,15 +33,15 @@ export const genDepsOfEntries = (entries: string[], deps: IContext['deps']) => {
 /**
  * generate new graph without given module
  * @param module
- * @param deps
+ * @param graph
  * @returns
  */
-export const excludeModuleOfGraph = async (
+export const deleteModule = async (
   module: string,
-  deps: IContext['deps']
+  graph: IContext['graph']
 ) => {
-  const depends = (await madge(deps)).depends(module);
-  const res = { ...deps };
+  const depends = (await madge(graph)).depends(module);
+  const res = { ...graph };
   delete res[module];
   depends.forEach((v) => {
     res[v] = res[v].filter((v) => v !== module);
@@ -49,16 +52,16 @@ export const excludeModuleOfGraph = async (
 /**
  * generate new graph with changed module
  * @param module
- * @param deps
+ * @param graph
  * @returns
  */
-export const modifyModuleOfGraph = async (
+export const changeModule = async (
   fromModule: string,
   toModule: string,
-  deps: IContext['deps']
+  graph: IContext['graph']
 ) => {
-  const depends = (await madge(deps)).depends(fromModule);
-  const res = { ...deps };
+  const depends = (await madge(graph)).depends(fromModule);
+  const res = { ...graph };
   res[toModule] = res[fromModule];
   delete res[fromModule];
   depends.forEach((v) => {

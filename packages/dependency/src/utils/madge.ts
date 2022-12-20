@@ -15,7 +15,7 @@ export const offsprings = (
   return res;
 };
 
-export const getMadgeConfig = (config: MadgeConfig) => {
+export const mergeMadgeConfig = (config: MadgeConfig) => {
   const tsConfig =
     typeof config.tsConfig === 'object'
       ? JSON.parse(JSON.stringify(config.tsConfig))

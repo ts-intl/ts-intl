@@ -1,5 +1,5 @@
 import { watch } from 'fs';
-import { access, readdir } from 'fs/promises';
+import { readdir, stat } from 'fs/promises';
 import { join, parse, resolve } from 'path';
 
 import { Dictionary } from '../types';
@@ -43,17 +43,8 @@ export const getFsResolver =
     include?: string[]
   ): DictionaryResolver =>
   async () => {
-    try {
-      // [locale].json
-      const jsonPath = resolve(fullPath, `${locale}.json`);
-      await access(jsonPath);
-      return {
-        multiSources: false,
-        path: jsonPath,
-        dictionary: await parseJsonFile(jsonPath),
-      };
-    } catch (err) {
-      const dirPath = resolve(fullPath, locale);
+    const dirPath = resolve(fullPath, locale);
+    if ((await stat(dirPath)).isDirectory()) {
       const dictionary: Dictionary = {};
       const files = await readdir(dirPath);
       for (const filename of files) {
@@ -67,6 +58,18 @@ export const getFsResolver =
         dictionary,
       };
     }
+
+    // [locale].json
+    const jsonPath = resolve(fullPath, `${locale}.json`);
+    if ((await stat(jsonPath)).isFile()) {
+      return {
+        multiSources: false,
+        path: jsonPath,
+        dictionary: await parseJsonFile(jsonPath),
+      };
+    }
+
+    return {};
   };
 
 const getFsWatcher =

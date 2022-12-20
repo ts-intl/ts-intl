@@ -1,7 +1,7 @@
 import type { MadgeConfig as OriginMadgeConfig } from 'madge';
 
 export type DepsGraph = Record<string, string[]>;
-export type PathKeysMap = Record<string, string[]>;
+export type PathIntlKeysMap = Record<string, string[]>;
 
 export type MadgeConfig = Omit<OriginMadgeConfig, 'baseDir'> & {
   baseDir: string;
@@ -22,16 +22,23 @@ export type Renamed = Required<IFileStatus<'renamed'>>;
 export type FileStatus = Modified | Deleted | NewFile | Renamed;
 
 export interface IOpts {
-  collectKeys: (module: string) => string[] | Promise<string[]>;
+  extractIntlKeys: (module: string) => string[] | Promise<string[]>;
   ignoreCollectDeps?: boolean;
   madgeConfig: MadgeConfig;
 }
 
 export interface IContext {
-  deps: DepsGraph;
-  pkMap: PathKeysMap;
+  graph: DepsGraph;
+  pathIntlKeysMap: PathIntlKeysMap;
 }
 
 export interface IAction<S = FileStatus> {
   (status: S, opts: IOpts, ctx: IContext): Promise<IContext>;
 }
+
+export type ExtractIntlKeysOpts = {
+  funcNamePattern: string;
+  hookNamePattern?: string;
+  richNamePattern?: string;
+  argIdx?: number;
+};
