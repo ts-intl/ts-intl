@@ -1,14 +1,5 @@
-// {
-//   "extends": "tsconfig/node.json",
-//   "include": ["./src"],
-//   "compilerOptions": {
-//     "jsx": "react-jsx",
-//     "rootDir": "src",
-//     "outDir": "./dist/esm"
-//   }
-// }
 {
-  "extends": "tsconfig/nextjs.json",
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "extends": "tsconfig/react-library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
 }
