@@ -43,32 +43,39 @@ export const getFsResolver =
     include?: string[]
   ): DictionaryResolver =>
   async () => {
-    const dirPath = resolve(fullPath, locale);
-    if ((await stat(dirPath)).isDirectory()) {
-      const dictionary: Dictionary = {};
-      const files = await readdir(dirPath);
-      for (const filename of files) {
-        const { name, ext } = parse(filename);
-        if (/^\.json$/.test(ext) && (!include || include.includes(name)))
-          dictionary[name] = await parseJsonFile(join(dirPath, filename));
+    try {
+      const dirPath = resolve(fullPath, locale);
+      if ((await stat(dirPath)).isDirectory()) {
+        const dictionary: Dictionary = {};
+        const files = await readdir(dirPath);
+        for (const filename of files) {
+          const { name, ext } = parse(filename);
+          if (/^\.json$/.test(ext) && (!include || include.includes(name)))
+            dictionary[name] = await parseJsonFile(join(dirPath, filename));
+        }
+        return {
+          multiSources: true,
+          path: dirPath,
+          dictionary,
+        };
       }
-      return {
-        multiSources: true,
-        path: dirPath,
-        dictionary,
-      };
+    } catch (err) {
+      //
     }
 
-    // [locale].json
-    const jsonPath = resolve(fullPath, `${locale}.json`);
-    if ((await stat(jsonPath)).isFile()) {
-      return {
-        multiSources: false,
-        path: jsonPath,
-        dictionary: await parseJsonFile(jsonPath),
-      };
+    try {
+      // [locale].json
+      const jsonPath = resolve(fullPath, `${locale}.json`);
+      if ((await stat(jsonPath)).isFile()) {
+        return {
+          multiSources: false,
+          path: jsonPath,
+          dictionary: await parseJsonFile(jsonPath),
+        };
+      }
+    } catch (err) {
+      //
     }
-
     return {};
   };
 

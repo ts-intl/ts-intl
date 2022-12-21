@@ -7,8 +7,7 @@
   "homepage": "",
   "scripts": {
     "lint": "eslint *.ts*",
-    "ts-check": "tsc --noEmit",
-    "test": "jest"
+    "ts-check": "tsc --noEmit"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.1.14",

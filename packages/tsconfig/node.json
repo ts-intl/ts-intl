@@ -1,19 +1,14 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node",
+  "extends": "./base.json",
   "compilerOptions": {
-    "strict": true,
-    "target": "ES2020",
-    "module": "ESNEXT",
-    "moduleResolution": "Node",
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
+    "lib": ["ES2015"],
+    "module": "ESNext",
+    "target": "es6",
     "resolveJsonModule": true,
     "noImplicitOverride": true,
-    "skipLibCheck": true,
     "types": ["node", "jest"],
-    "baseUrl": ".",
-    "forceConsistentCasingInFileNames": true,
     "pretty": true
   },
   "watchOptions": {
