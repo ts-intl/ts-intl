@@ -1,8 +1,9 @@
-const { isStaticLiteral, isTargetCallExpression } = require('./utils/is');
-const { getStaticLiteralValue } = require('./utils/get');
+import { Node } from './node';
+import { createRule } from './utils/eslint';
+import { getStaticLiteralValue } from './utils/get';
+import { isStaticLiteral, isTargetCallExpression } from './utils/is';
 
-module.exports = {
-  name: 'no-forbidden-keys',
+export const noForbiddenKeys = createRule({
   meta: {
     type: 'suggestion',
     docs: {
@@ -10,7 +11,6 @@ module.exports = {
       category: 'Best Practices',
       recommended: false,
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -38,9 +38,9 @@ module.exports = {
         const { forbiddenPattern = '' } = context.options[0] || {};
         if (!forbiddenPattern) return;
         if (!isTargetCallExpression(context, node)) return;
-        if (!isStaticLiteral(node.arguments[0])) return;
+        if (!isStaticLiteral(node.arguments[0] as Node)) return;
         const forbiddenRegexp = new RegExp(forbiddenPattern);
-        const key = getStaticLiteralValue(node.arguments[0]);
+        const key = getStaticLiteralValue(node.arguments[0] as Node);
         if (forbiddenRegexp.test(key)) {
           context.report({
             node,
@@ -50,4 +50,4 @@ module.exports = {
       },
     };
   },
-};
+});

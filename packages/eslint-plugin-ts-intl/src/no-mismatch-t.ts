@@ -1,8 +1,8 @@
-const { isStaticLiteral, isTargetCallExpression } = require('./utils/is');
-const { getFunctionName, getNodeName } = require('./utils/get');
+import { Node } from './node';
+import { createRule } from './utils/eslint';
+import { getFunctionName, getNodeName } from './utils/get';
 
-module.exports = {
-  name: 'no-mismatch-t',
+export const noMismatchT = createRule({
   meta: {
     type: 'suggestion',
     docs: {
@@ -10,7 +10,6 @@ module.exports = {
       category: 'Best Practices',
       recommended: false,
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -35,11 +34,11 @@ module.exports = {
         if (
           !node.init ||
           node.init.type !== 'CallExpression' ||
-          !hookNameRegexp.test(getFunctionName(node.init))
+          !hookNameRegexp.test(getFunctionName(node.init as Node))
         )
           return;
         const funcNameRegexp = new RegExp(funcNamePattern);
-        const nodeName = getNodeName(context, node.id);
+        const nodeName = getNodeName(context, node.id as Node);
         if (!funcNameRegexp.test(nodeName)) {
           context.report({
             node: node.id,
@@ -49,4 +48,4 @@ module.exports = {
       },
     };
   },
-};
+});

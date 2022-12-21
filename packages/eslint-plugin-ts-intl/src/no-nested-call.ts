@@ -1,10 +1,9 @@
-import { Rule } from 'eslint';
-
 import { Node } from './node';
+import { createRule } from './utils/eslint';
 import { getFunctionName } from './utils/get';
 import { isTargetCallExpression } from './utils/is';
 
-const rule: Rule.RuleModule = {
+export const noNestedCall = createRule({
   meta: {
     type: 'problem',
     docs: {
@@ -53,6 +52,4 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
-
-export default rule;
+});

@@ -1,7 +1,7 @@
-const { getFunctionName } = require('./utils/get');
+import { createRule } from './utils/eslint';
+import { getFunctionName } from './utils/get';
 
-module.exports = {
-  name: 'no-namespace-hook',
+export const noNamespaceHooks = createRule({
   meta: {
     type: 'suggestion',
     docs: {
@@ -42,4 +42,4 @@ module.exports = {
       },
     };
   },
-};
+});

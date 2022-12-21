@@ -104,12 +104,14 @@ importers:
       '@types/eslint': ^8.4.10
       eslint: ^8.29.0
       eslint-config-custom: workspace:*
+      jsonc-eslint-parser: ^2.1.0
       node-cache: ^5.1.2
       shared: workspace:*
       tsconfig: workspace:*
     dependencies:
       '@formatjs/icu-messageformat-parser': 2.1.14
       eslint: 8.29.0
+      jsonc-eslint-parser: 2.1.0
       node-cache: 5.1.2
       shared: link:../shared
     devDependencies:
@@ -4017,6 +4019,16 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
     dev: true
+
+  /jsonc-eslint-parser/2.1.0:
+    resolution: {integrity: sha512-qCRJWlbP2v6HbmKW7R3lFbeiVWHo+oMJ0j+MizwvauqnCV/EvtAeEeuCgoc/ErtsuoKgYB8U4Ih8AxJbXoE6/g==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dependencies:
+      acorn: 8.8.1
+      eslint-visitor-keys: 3.3.0
+      espree: 9.4.1
+      semver: 7.3.8
+    dev: false
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}

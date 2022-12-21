@@ -26,6 +26,7 @@ export const getNodeName = (context: Rule.RuleContext, node: Node): string => {
 
 export const getFunctionName = (node: Node) =>
   (node.type === 'CallExpression' &&
+    node.callee &&
     ((node.callee.type === 'MemberExpression' &&
       node.callee.property.type === 'Identifier' &&
       node.callee.property.name) ||

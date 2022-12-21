@@ -1,6 +1,5 @@
 const rules = [
   'no-dynamic-keys',
-  'no-nested-call',
   'no-forbidden-keys',
   'no-missing-keys',
   'no-namespace-hook',

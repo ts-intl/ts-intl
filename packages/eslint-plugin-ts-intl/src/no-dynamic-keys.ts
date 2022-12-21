@@ -1,8 +1,9 @@
-const { isStaticLiteral, isTargetCallExpression } = require('./utils/is');
-const { getNodeName } = require('./utils/get');
+import { Node } from './node';
+import { createRule } from './utils/eslint';
+import { getNodeName } from './utils/get';
+import { isStaticLiteral, isTargetCallExpression } from './utils/is';
 
-module.exports = {
-  name: 'no-dynamic-keys',
+export const noDynamicKeys = createRule({
   meta: {
     type: 'suggestion',
     docs: {
@@ -10,7 +11,6 @@ module.exports = {
       category: 'Best Practices',
       recommended: false,
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -33,15 +33,15 @@ module.exports = {
     return {
       CallExpression(node) {
         if (!isTargetCallExpression(context, node)) return;
-        if (isStaticLiteral(node.arguments[0])) return;
+        if (isStaticLiteral(node.arguments[0] as Node)) return;
         context.report({
           node,
           message: `'${getNodeName(
             context,
-            node.arguments[0]
+            node.arguments[0] as Node
           )}' dynamic key is used'`,
         });
       },
     };
   },
-};
+});
