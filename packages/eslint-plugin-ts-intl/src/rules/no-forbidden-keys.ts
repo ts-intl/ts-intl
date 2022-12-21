@@ -1,7 +1,7 @@
-import { Node } from './node';
-import { createRule } from './utils/eslint';
-import { getStaticLiteralValue } from './utils/get';
-import { isStaticLiteral, isTargetCallExpression } from './utils/is';
+import { Node } from '../node';
+import { createRule } from '../utils/eslint';
+import { getStaticLiteralValue } from '../utils/get';
+import { isStaticLiteral, isTargetCallExpression } from '../utils/is';
 
 export const noForbiddenKeys = createRule({
   meta: {

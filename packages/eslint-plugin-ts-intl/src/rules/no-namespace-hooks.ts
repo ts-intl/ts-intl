@@ -1,5 +1,5 @@
-import { createRule } from './utils/eslint';
-import { getFunctionName } from './utils/get';
+import { createRule, getSchema } from '../utils/eslint';
+import { getFunctionName } from '../utils/get';
 
 export const noNamespaceHooks = createRule({
   meta: {
@@ -10,17 +10,7 @@ export const noNamespaceHooks = createRule({
       recommended: false,
     },
     fixable: 'code',
-    schema: [
-      {
-        type: 'object',
-        properties: {
-          hookNamePattern: {
-            type: 'string',
-          },
-        },
-        additionalProperties: false,
-      },
-    ],
+    ...getSchema(['hookNamePattern']),
   },
   create(context) {
     return {

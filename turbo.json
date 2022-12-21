@@ -1,8 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["$VSCODE_PID"],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "$VSCODE_PID"],
       "outputs": ["dist/**"]
     },
     "lint": {

@@ -1,6 +1,6 @@
-import { Node } from './node';
-import { createRule } from './utils/eslint';
-import { getFunctionName, getNodeName } from './utils/get';
+import { Node } from '../node';
+import { createRule, getSchema } from '../utils/eslint';
+import { getFunctionName, getNodeName } from '../utils/get';
 
 export const noMismatchT = createRule({
   meta: {
@@ -10,20 +10,7 @@ export const noMismatchT = createRule({
       category: 'Best Practices',
       recommended: false,
     },
-    schema: [
-      {
-        type: 'object',
-        properties: {
-          funcNamePattern: {
-            type: 'string',
-          },
-          hookNamePattern: {
-            type: 'string',
-          },
-        },
-        additionalProperties: false,
-      },
-    ],
+    ...getSchema(['funcNamePattern', 'hookNamePattern']),
   },
   create(context) {
     return {

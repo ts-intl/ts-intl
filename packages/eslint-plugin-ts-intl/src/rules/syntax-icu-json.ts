@@ -6,11 +6,11 @@ import { Rule } from 'eslint';
 import { AST } from 'jsonc-eslint-parser';
 import { join, parse } from 'path';
 
-import { createRule } from './utils/eslint';
+import { createRule, getSchema } from '../utils/eslint';
 
 const keyMaxLength = 130;
 
-export const icuJsonStyle = createRule({
+export const syntaxIcuJson = createRule({
   meta: {
     type: 'layout',
     docs: {
@@ -18,23 +18,7 @@ export const icuJsonStyle = createRule({
       category: 'Best Practices',
       recommended: false,
     },
-    schema: [
-      {
-        type: 'object',
-        properties: {
-          fullPath: {
-            type: 'string',
-          },
-          locale: {
-            type: 'string',
-          },
-          forbiddenPattern: {
-            type: 'string',
-          },
-        },
-        additionalProperties: false,
-      },
-    ],
+    ...getSchema(['forbiddenPattern', 'fullPath', 'locale']),
   },
   create(context) {
     if (!context.parserServices.isJSON) {

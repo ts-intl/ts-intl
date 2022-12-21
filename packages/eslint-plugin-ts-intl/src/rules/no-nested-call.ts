@@ -1,7 +1,7 @@
-import { Node } from './node';
-import { createRule } from './utils/eslint';
-import { getFunctionName } from './utils/get';
-import { isTargetCallExpression } from './utils/is';
+import { Node } from '../node';
+import { createRule, getSchema } from '../utils/eslint';
+import { getFunctionName } from '../utils/get';
+import { isTargetCallExpression } from '../utils/is';
 
 export const noNestedCall = createRule({
   meta: {
@@ -11,23 +11,7 @@ export const noNestedCall = createRule({
       category: 'Best Practices',
       recommended: false,
     },
-    schema: [
-      {
-        type: 'object',
-        properties: {
-          funcNamePattern: {
-            type: 'string',
-          },
-          hookNamePattern: {
-            type: 'string',
-          },
-          richNamePattern: {
-            type: 'string',
-          },
-        },
-        additionalProperties: false,
-      },
-    ],
+    ...getSchema(['funcNamePattern', 'hookNamePattern', 'richNamePattern']),
   },
   create(context) {
     const stack: Node[] = [];

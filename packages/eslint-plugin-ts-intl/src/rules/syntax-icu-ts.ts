@@ -1,10 +1,13 @@
-const { isStaticLiteral, isTargetCallExpression } = require('./utils/is');
-const { getStaticLiteralValue, getFunctionName } = require('./utils/get');
-const { collectVariableNodes } = require('./utils/icu');
-const { LocaleMessages } = require('./utils/messages');
+import { TYPE } from '@formatjs/icu-messageformat-parser';
+import { getDictionaryControllerFsSingleton } from 'shared';
 
-module.exports = {
-  name: 'icu-message-format',
+import { Node } from '../node';
+import { createRule, getSchema } from '../utils/eslint';
+import { getFunctionName, getStaticLiteralValue } from '../utils/get';
+import { collectVariableNodes } from '../utils/icu';
+import { isStaticLiteral, isTargetCallExpression } from '../utils/is';
+
+export const syntaxIcuTs = createRule({
   meta: {
     type: 'suggestion',
     docs: {
@@ -12,58 +15,41 @@ module.exports = {
       category: 'Best Practices',
       recommended: false,
     },
-    fixable: null,
-    schema: [
-      {
-        type: 'object',
-        properties: {
-          fullPath: {
-            type: 'string',
-          },
-          locale: {
-            type: 'string',
-          },
-          funcNamePattern: {
-            type: 'string',
-          },
-          hookNamePattern: {
-            type: 'string',
-          },
-          namespaceDivider: {
-            type: 'string',
-          },
-          keyDivider: {
-            type: 'string',
-          },
-          richNamePattern: {
-            type: 'string',
-          },
-        },
-        additionalProperties: false,
-      },
-    ],
+    ...getSchema([
+      'funcNamePattern',
+      'hookNamePattern',
+      'richNamePattern',
+      'namespaceDivider',
+      'keyDivider',
+      'fullPath',
+      'locale',
+    ]),
   },
   create(context) {
+    const { fullPath, locale, keyDivider, namespaceDivider, richNamePattern } =
+      context.options[0] || {};
+    const baseControllerPromise = getDictionaryControllerFsSingleton({
+      fullPath,
+      locale,
+      watchMode: process.env.VSCODE_PID !== undefined,
+    });
+
     return {
-      CallExpression(node) {
-        const {
-          fullPath,
-          locale,
-          keyDivider,
-          namespaceDivider,
-          richNamePattern,
-        } = context.options[0] || {};
+      CallExpression: async (node) => {
         if (!isTargetCallExpression(context, node)) return;
-        if (!isStaticLiteral(node.arguments[0])) return;
-        const localeMessages = LocaleMessages.getSingleton(fullPath, locale);
-        const key = getStaticLiteralValue(node.arguments[0]);
-        const { code, msg = '' } = localeMessages.hasPath(
+        if (!isStaticLiteral(node.arguments[0] as Node)) return;
+        const baseController = await baseControllerPromise;
+        const key = getStaticLiteralValue(node.arguments[0] as Node);
+        const { errorType, msg = '' } = baseController.hasPathToLeaf(
           key,
           namespaceDivider,
           keyDivider
         );
-        if (code !== 0) return;
+        // no-invalid-keys would handle invalid key
+        if (errorType !== undefined) return;
+
         const nodeMap = collectVariableNodes(msg);
+
         if (!Object.keys(nodeMap).length) {
           if (node.arguments[1]) {
             context.report({
@@ -73,6 +59,7 @@ module.exports = {
           }
           return;
         }
+
         if (
           !node.arguments[1] ||
           node.arguments[1].type !== 'ObjectExpression'
@@ -84,8 +71,10 @@ module.exports = {
           return;
         }
 
-        const visit = {};
-        for (let p of node.arguments[1].properties) {
+        const visit: Record<string, boolean> = {};
+        for (const p of node.arguments[1].properties) {
+          // TODO: handle SpreadElement
+          if (p.type !== 'Property') continue;
           if (!p.key || p.key.type !== 'Identifier') {
             context.report({
               node: p,
@@ -102,6 +91,7 @@ module.exports = {
           }
           visit[p.key.name] = true;
         }
+
         const missingParameters = Object.keys(nodeMap).filter(
           (key) => !visit[key]
         );
@@ -113,8 +103,7 @@ module.exports = {
           return;
         }
 
-        if (Object.values(nodeMap).some((type) => type === 8)) {
-          // tag
+        if (Object.values(nodeMap).some((type) => type === TYPE.tag)) {
           const richNameRegexp = new RegExp(richNamePattern);
           if (!richNameRegexp.test(getFunctionName(node))) {
             context.report({
@@ -127,4 +116,4 @@ module.exports = {
       },
     };
   },
-};
+});

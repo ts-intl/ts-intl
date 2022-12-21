@@ -26,7 +26,20 @@ export interface JSXText extends MaybeNode {
   type: 'JSXText';
   value: string;
   raw: string;
-  parent: MaybeNode;
 }
 
-export type Node = JSXText | Rule.Node;
+export interface TSLiteralType extends MaybeNode {
+  type: 'TSLiteralType';
+}
+
+export interface JSXAttribute extends MaybeNode {
+  type: 'JSXAttribute';
+  value: any;
+  raw: string;
+}
+
+export type Node =
+  | Rule.Node
+  | (JSXText & { parent: Node })
+  | (TSLiteralType & { parent: Node })
+  | (JSXAttribute & { parent: Node });
