@@ -1,6 +1,18 @@
 {
   "name": "ts-intl",
   "version": "0.0.0",
+  "author": "https://github.com/hakonleung",
+  "description": "",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "react",
+    "dependencies",
+    "ssr",
+    "typescript",
+    "jsx",
+    "tsx"
+  ],
   "private": true,
   "workspaces": [
     "packages/*"

@@ -1,6 +1,18 @@
 {
-  "name": "eslint-plugin-ts-intl",
+  "name": "@ts-intl/eslint-plugin-ts-intl",
   "version": "0.0.0",
+  "author": "https://github.com/hakonleung",
+  "description": "ESLint plugin for js/ts/jsx/tsx",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "react",
+    "typescript",
+    "eslint",
+    "eslint-plugin",
+    "jsx",
+    "tsx"
+  ],
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",

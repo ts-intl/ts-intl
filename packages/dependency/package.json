@@ -1,6 +1,18 @@
 {
-  "name": "dependency",
+  "name": "@ts-intl/dependency",
   "version": "0.0.0",
+  "author": "https://github.com/hakonleung",
+  "description": "I18n keys dependency analysis",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "react",
+    "dependencies",
+    "ssr",
+    "typescript",
+    "jsx",
+    "tsx"
+  ],
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",

@@ -1,6 +1,10 @@
 {
-  "name": "shared",
+  "name": "@ts-intl/shared",
   "version": "0.0.0",
+  "author": "https://github.com/hakonleung",
+  "description": "",
+  "keywords": [],
+  "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "license": "MIT",
