@@ -36,17 +36,16 @@ export const noInvalidKeys = createRule({
       namespaceDivider,
       fallbackNamespace,
     } = context.options[0] || {};
-    const controllerPromise = getDictionaryControllerFsSingleton({
+    const controller = getDictionaryControllerFsSingleton({
       fullPath,
       locale,
       watchMode: process.env.VSCODE_PID !== undefined,
     });
 
     return {
-      CallExpression: async (node) => {
+      CallExpression: (node) => {
         if (!isTargetCallExpression(context, node)) return;
         if (!isStaticLiteral(node.arguments[0] as Node)) return;
-        const controller = await controllerPromise;
         const key = getStaticLiteralValue(node.arguments[0] as Node);
         const { errorType, msg = '' } = controller.hasPathToLeaf(
           key,
@@ -54,7 +53,6 @@ export const noInvalidKeys = createRule({
           keyDivider
         );
         if (!errorType) return;
-
         switch (errorType) {
           case DictionaryParseErrorType.MissingNamespace:
             context.report({

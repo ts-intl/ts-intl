@@ -49,7 +49,7 @@ type ResolveConfig = {
     exclude?: NSPath; // namespaces/sub-keys path for building excludeTrie
   };
 };
-const genTranslationDictFs = async ({
+const genTranslationDictFs = ({
   root,
   lng,
   fallbackLng,

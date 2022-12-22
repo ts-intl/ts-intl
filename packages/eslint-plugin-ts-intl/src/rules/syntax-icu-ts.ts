@@ -28,17 +28,16 @@ export const syntaxIcuTs = createRule({
   create(context) {
     const { fullPath, locale, keyDivider, namespaceDivider, richNamePattern } =
       context.options[0] || {};
-    const baseControllerPromise = getDictionaryControllerFsSingleton({
+    const baseController = getDictionaryControllerFsSingleton({
       fullPath,
       locale,
       watchMode: process.env.VSCODE_PID !== undefined,
     });
 
     return {
-      CallExpression: async (node) => {
+      CallExpression: (node) => {
         if (!isTargetCallExpression(context, node)) return;
         if (!isStaticLiteral(node.arguments[0] as Node)) return;
-        const baseController = await baseControllerPromise;
         const key = getStaticLiteralValue(node.arguments[0] as Node);
         const { errorType, msg = '' } = baseController.hasPathToLeaf(
           key,

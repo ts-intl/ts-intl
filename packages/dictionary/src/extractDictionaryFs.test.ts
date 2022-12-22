@@ -6,8 +6,8 @@ const jsonPath = resolve(__dirname, './test/json');
 const folderPath = resolve(__dirname, './test/folder');
 
 describe('extractDictionaryFs', () => {
-  it('json', async () => {
-    const dict = await extractDictionaryFs({
+  it('json', () => {
+    const dict = extractDictionaryFs({
       root: jsonPath,
       lng: 'ko',
       fallbackLng: 'en',
@@ -19,8 +19,8 @@ describe('extractDictionaryFs', () => {
     expect(JSON.stringify(dict)).toBe('{"a":{"c":{"d":"dd","e":"e"},"g":"g"}}'); // exclude a.b
   });
 
-  it('folder', async () => {
-    const dict1 = await extractDictionaryFs({
+  it('folder', () => {
+    const dict1 = extractDictionaryFs({
       root: folderPath,
       lng: 'ko',
       fallbackLng: 'en',
@@ -33,7 +33,7 @@ describe('extractDictionaryFs', () => {
       '{"a":{"c":{"d":"dd","e":"e"},"g":"g"}}'
     ); // exclude a.b
 
-    const dict2 = await extractDictionaryFs({
+    const dict2 = extractDictionaryFs({
       root: folderPath,
       lng: 'ko',
       fallbackLng: 'en',
@@ -46,7 +46,7 @@ describe('extractDictionaryFs', () => {
       '{"a":{"c":{"d":"dd","e":"e"},"g":"g"},"b":{"z":"zz"}}'
     );
 
-    const dict3 = await extractDictionaryFs({
+    const dict3 = extractDictionaryFs({
       root: folderPath,
       lng: 'ko',
       fallbackLng: 'en',

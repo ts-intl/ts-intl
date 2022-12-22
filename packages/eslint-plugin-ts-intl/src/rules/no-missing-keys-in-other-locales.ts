@@ -8,14 +8,14 @@ import { join, parse } from 'path';
 
 import { createRule, getSchema } from '../utils/eslint';
 
-const otherLocalePromises: Record<string, Promise<DictionaryController>> = {};
+const otherLocaleController: Record<string, DictionaryController> = {};
 const getLocale = (
   fullPath: string,
   locale: string,
   watchMode = process.env.VSCODE_PID !== undefined
 ) => {
-  return (otherLocalePromises[`${fullPath}-${locale}`] =
-    otherLocalePromises[`${fullPath}-${locale}`] ||
+  return (otherLocaleController[`${fullPath}-${locale}`] =
+    otherLocaleController[`${fullPath}-${locale}`] ||
     getDictionaryControllerFs({
       fullPath,
       locale,
@@ -67,8 +67,8 @@ export const noMissingKeysInOtherLocales = createRule({
       const pathString = keys.length
         ? [namespace, keys.join(keyDivider)].join(namespaceDivider)
         : namespace;
-      otherLocales.forEach(async (locale: string) => {
-        const controller = await getLocale(fullPath, locale);
+      otherLocales.forEach((locale: string) => {
+        const controller = getLocale(fullPath, locale);
         const { errorType, msg } = controller.hasPathToLeaf(
           pathString,
           namespaceDivider,

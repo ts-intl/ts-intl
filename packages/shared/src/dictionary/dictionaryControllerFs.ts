@@ -1,5 +1,4 @@
-import { watch } from 'fs';
-import { readdir, stat } from 'fs/promises';
+import { readdirSync, statSync, watch } from 'fs';
 import { join, parse, resolve } from 'path';
 
 import { Dictionary } from '../types';
@@ -14,12 +13,12 @@ import {
 interface Configs {
   fullPath: string;
   locale: string;
-  parseJsonFile?: (path: string) => Promise<Dictionary> | Dictionary;
+  parseJsonFile?: (path: string) => Dictionary;
   watchMode?: boolean;
 }
 
 let singleton: DictionaryController | undefined;
-export const getDictionaryControllerFsSingleton = async (configs: Configs) => {
+export const getDictionaryControllerFsSingleton = (configs: Configs) => {
   return singleton ?? getDictionaryControllerFs(configs);
 };
 
@@ -42,16 +41,16 @@ export const getFsResolver =
     parseJsonFile: NonNullable<Configs['parseJsonFile']>,
     include?: string[]
   ): DictionaryResolver =>
-  async () => {
+  () => {
     try {
       const dirPath = resolve(fullPath, locale);
-      if ((await stat(dirPath)).isDirectory()) {
+      if (statSync(dirPath).isDirectory()) {
         const dictionary: Dictionary = {};
-        const files = await readdir(dirPath);
+        const files = readdirSync(dirPath);
         for (const filename of files) {
           const { name, ext } = parse(filename);
           if (/^\.json$/.test(ext) && (!include || include.includes(name)))
-            dictionary[name] = await parseJsonFile(join(dirPath, filename));
+            dictionary[name] = parseJsonFile(join(dirPath, filename));
         }
         return {
           multiSources: true,
@@ -66,11 +65,11 @@ export const getFsResolver =
     try {
       // [locale].json
       const jsonPath = resolve(fullPath, `${locale}.json`);
-      if ((await stat(jsonPath)).isFile()) {
+      if (statSync(jsonPath).isFile()) {
         return {
           multiSources: false,
           path: jsonPath,
-          dictionary: await parseJsonFile(jsonPath),
+          dictionary: parseJsonFile(jsonPath),
         };
       }
     } catch (err) {
@@ -86,20 +85,16 @@ const getFsWatcher =
   ): DictionaryWatcher =>
   ({ multiSources = false, localePath, updateDictionary }) => {
     if (!watchMode || !localePath) return () => {};
-    const fsWatcher = watch(
-      localePath,
-      { recursive: true },
-      async (_, filename) => {
-        const { name, ext } = parse(filename);
-        if (/^\.json$/.test(ext)) {
-          updateDictionary(
-            multiSources
-              ? { [name]: await parseJsonFile(join(localePath, filename)) }
-              : await parseJsonFile(localePath), // [locale].json ignore [locale] ns
-            !multiSources
-          );
-        }
+    const fsWatcher = watch(localePath, { recursive: true }, (_, filename) => {
+      const { name, ext } = parse(filename);
+      if (/^\.json$/.test(ext)) {
+        updateDictionary(
+          multiSources
+            ? { [name]: parseJsonFile(join(localePath, filename)) }
+            : parseJsonFile(localePath), // [locale].json ignore [locale] ns
+          !multiSources
+        );
       }
-    );
+    });
     return () => fsWatcher.close();
   };

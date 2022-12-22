@@ -8,7 +8,7 @@ type Resolved = {
 };
 
 export interface DictionaryResolver {
-  (): Promise<Resolved> | Resolved;
+  (): Resolved;
 }
 
 export interface DictionaryWatcher {
@@ -71,9 +71,9 @@ export class DictionaryController {
   };
 }
 
-export const getDictionaryController = async (
+export const getDictionaryController = (
   resolver: DictionaryResolver,
   watcher?: DictionaryWatcher
 ) => {
-  return new DictionaryController(await resolver(), watcher);
+  return new DictionaryController(resolver(), watcher);
 };
