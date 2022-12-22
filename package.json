@@ -2,6 +2,10 @@
   "name": "ts-intl",
   "version": "0.0.0",
   "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakonleung/ts-intl.git"
+  },
   "description": "",
   "keywords": [
     "i18n",
@@ -53,7 +57,8 @@
     "*.{ts,tsx}": "eslint --fix"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
   },
   "packageManager": "pnpm@7.9.3"
 }

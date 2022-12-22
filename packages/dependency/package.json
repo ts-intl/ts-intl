@@ -2,6 +2,11 @@
   "name": "@ts-intl/dependency",
   "version": "0.0.0",
   "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakonleung/ts-intl.git",
+    "directory": "packages/dependency"
+  },
   "description": "I18n keys dependency analysis",
   "keywords": [
     "i18n",
@@ -30,5 +35,9 @@
     "@types/madge": "^5.0.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
   }
 }
