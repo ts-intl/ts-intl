@@ -7,7 +7,6 @@
     "url": "https://github.com/hakonleung/ts-intl.git",
     "directory": "packages/shared"
   },
-  "private": true,
   "description": "",
   "keywords": [
     "i18n",
