@@ -15,7 +15,7 @@
   "license": "MIT",
   "homepage": "",
   "scripts": {
-    "lint": "eslint *.ts*",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
     "ts-check": "tsc --noEmit",
     "test": "jest"
   },

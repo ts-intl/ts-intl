@@ -5,7 +5,8 @@ import {
   PropertyAccessExpression,
   SyntaxKind,
 } from 'typescript';
-import { ExtractIntlKeysOpts } from '../../types'
+
+import { ExtractIntlKeysOpts } from '../../types';
 
 export const isIntlCall = (node: CallExpression, opts: ExtractIntlKeysOpts) => {
   const {
