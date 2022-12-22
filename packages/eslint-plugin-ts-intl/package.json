@@ -1,0 +1,52 @@
+{
+  "name": "@ts-intl/eslint-plugin-ts-intl",
+  "version": "0.2.1",
+  "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakonleung/ts-intl.git",
+    "directory": "packages/eslint-plugin-ts-intl"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "description": "ESLint plugin for js/ts/jsx/tsx",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "react",
+    "typescript",
+    "eslint",
+    "eslint-plugin",
+    "jsx",
+    "tsx"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "ts-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@formatjs/icu-messageformat-parser": "^2.1.14",
+    "@types/json-schema": "^7.0.11",
+    "eslint": "^8.29.0",
+    "jsonc-eslint-parser": "^2.1.0",
+    "node-cache": "^5.1.2",
+    "@ts-intl/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.4.10",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
+  }
+}

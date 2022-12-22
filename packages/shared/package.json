@@ -1,0 +1,38 @@
+{
+  "name": "@ts-intl/shared",
+  "version": "0.2.1",
+  "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakonleung/ts-intl.git",
+    "directory": "packages/shared"
+  },
+  "description": "",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "shared"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "license": "MIT",
+  "homepage": "",
+  "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "ts-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
+  }
+}

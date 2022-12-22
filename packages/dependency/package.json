@@ -1,0 +1,47 @@
+{
+  "name": "@ts-intl/dependency",
+  "version": "0.2.3",
+  "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakonleung/ts-intl.git",
+    "directory": "packages/dependency"
+  },
+  "description": "I18n keys dependency analysis",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "react",
+    "dependencies",
+    "ssr",
+    "typescript",
+    "jsx",
+    "tsx"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "license": "MIT",
+  "homepage": "",
+  "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "ts-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "madge": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/madge": "^5.0.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
+  }
+}

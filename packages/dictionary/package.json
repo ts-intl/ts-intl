@@ -1,0 +1,43 @@
+{
+  "name": "@ts-intl/dictionary",
+  "version": "0.2.1",
+  "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakonleung/ts-intl.git",
+    "directory": "packages/dictionary"
+  },
+  "description": "I18n dictionary/messages generator",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "ssr",
+    "typescript",
+    "json"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "license": "MIT",
+  "homepage": "",
+  "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "ts-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ts-intl/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
+  }
+}
