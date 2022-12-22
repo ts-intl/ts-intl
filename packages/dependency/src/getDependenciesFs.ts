@@ -1,20 +1,31 @@
-import { readdir, stat } from 'fs/promises';
+import { lstatSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 
 import { getDependenciesByEntries } from './getDependenciesByEntries';
 import { ExtractIntlKeysOpts, IOpts } from './types';
 
-const getEntries = async (dirPath: string, rule = /\.tsx?$/) => {
-  if (!(await stat(dirPath)).isDirectory())
+const getEntriesSync = (dirPath: string, rule = /\.tsx?$/) => {
+  if (!lstatSync(dirPath).isDirectory())
     return rule.test(dirPath) ? [dirPath] : [];
   const res: string[] = [];
-  (await readdir(dirPath)).forEach(async (file) => {
-    res.push(...(await getEntries(resolve(dirPath, file), rule)));
+  readdirSync(dirPath).forEach((file) => {
+    res.push(...getEntriesSync(resolve(dirPath, file)));
   });
   return res;
 };
 
-export const getDependenciesFs = async (
+// const getEntries = async (dirPath: string, rule = /\.tsx?$/) => {
+//   const isDir = (await stat(dirPath)).isDirectory();
+//   if (!isDir) return rule.test(dirPath) ? [dirPath] : [];
+//   const res: string[] = [];
+//   (await readdir(dirPath)).forEach(async (file) => {
+//     const child = await getEntries(resolve(dirPath, file), rule);
+//     child.forEach((v) => res.push(v));
+//   });
+//   return res;
+// };
+
+export const getDependenciesFs = (
   entry: string,
   opts: Omit<IOpts, 'extractIntlKeys'> & {
     extractIntlKeys?: IOpts['extractIntlKeys'];
@@ -22,7 +33,7 @@ export const getDependenciesFs = async (
   extractIntlKeysOpts?: ExtractIntlKeysOpts
 ) => {
   return getDependenciesByEntries(
-    await getEntries(entry),
+    getEntriesSync(entry),
     opts,
     extractIntlKeysOpts
   );

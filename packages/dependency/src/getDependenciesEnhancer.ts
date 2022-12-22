@@ -26,5 +26,6 @@ export const getDependenciesEnhancer = async (
     pathIntlKeysMap,
     moduleIntlKeysMap,
     usedIntlKeys,
+    modules,
   };
 };
