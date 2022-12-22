@@ -1,10 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["$VSCODE_PID"],
+  "globalDependencies": [],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build", "$VSCODE_PID"],
-      "outputs": ["dist/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "env": [
+        "VSCODE_PID"
+      ]
     },
     "lint": {
       "outputs": []
@@ -13,12 +20,14 @@
       "cache": false
     },
     "watch": {
-      // https://github.com/vercel/turborepo/issues/986#issuecomment-1091384632
       "cache": false
     },
     "ts-check": {},
     "test": {
       "outputs": []
     }
-  }
+  },
+  "globalEnv": [
+    "VSCODE_PID"
+  ]
 }
