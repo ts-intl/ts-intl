@@ -50,13 +50,11 @@ importers:
 
   packages/dependency:
     specifiers:
-      '@ts-intl/shared': workspace:*
       '@types/madge': ^5.0.0
       eslint-config-custom: workspace:*
       madge: ^5.0.1
       tsconfig: workspace:*
     dependencies:
-      '@ts-intl/shared': link:../shared
       madge: 5.0.1
     devDependencies:
       '@types/madge': 5.0.0
