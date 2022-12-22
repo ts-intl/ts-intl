@@ -3,31 +3,17 @@
   "globalDependencies": [],
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "env": [
-        "VSCODE_PID"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "env": ["VSCODE_PID"]
     },
     "lint": {
       "outputs": []
-    },
-    "dev": {
-      "cache": false
-    },
-    "watch": {
-      "cache": false
     },
     "ts-check": {},
     "test": {
       "outputs": []
     }
   },
-  "globalEnv": [
-    "VSCODE_PID"
-  ]
+  "globalEnv": ["VSCODE_PID"]
 }

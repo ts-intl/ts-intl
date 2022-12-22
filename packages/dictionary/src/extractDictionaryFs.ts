@@ -5,7 +5,7 @@ import {
   getFsResolver,
   NSPath,
   Trie,
-} from 'shared';
+} from '@ts-intl/shared';
 
 import { extractDictionary } from './extractDictionary';
 

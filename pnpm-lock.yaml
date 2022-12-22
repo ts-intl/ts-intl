@@ -22,6 +22,7 @@ importers:
       react-dom: ^18.2.0
       ts-jest: ^29.0.3
       ts-node: ^10.9.1
+      tsconfig: workspace:*
       turbo: latest
       typescript: ^4.9.4
     devDependencies:
@@ -43,19 +44,20 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       ts-jest: 29.0.3_orsjflytm5zjweotzi5qijesea
       ts-node: 10.9.1_zpb5kzpnyozdjq4cwaojlul57u
+      tsconfig: link:packages/tsconfig
       turbo: 1.6.3
       typescript: 4.9.4
 
   packages/dependency:
     specifiers:
+      '@ts-intl/shared': workspace:*
       '@types/madge': ^5.0.0
       eslint-config-custom: workspace:*
       madge: ^5.0.1
-      shared: workspace:*
       tsconfig: workspace:*
     dependencies:
+      '@ts-intl/shared': link:../shared
       madge: 5.0.1
-      shared: link:../shared
     devDependencies:
       '@types/madge': 5.0.0
       eslint-config-custom: link:../eslint-config-custom
@@ -63,11 +65,11 @@ importers:
 
   packages/dictionary:
     specifiers:
+      '@ts-intl/shared': workspace:*
       eslint-config-custom: workspace:*
-      shared: workspace:*
       tsconfig: workspace:*
     dependencies:
-      shared: link:../shared
+      '@ts-intl/shared': link:../shared
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
@@ -101,21 +103,21 @@ importers:
   packages/eslint-plugin-ts-intl:
     specifiers:
       '@formatjs/icu-messageformat-parser': ^2.1.14
+      '@ts-intl/shared': workspace:*
       '@types/eslint': ^8.4.10
       '@types/json-schema': ^7.0.11
       eslint: ^8.29.0
       eslint-config-custom: workspace:*
       jsonc-eslint-parser: ^2.1.0
       node-cache: ^5.1.2
-      shared: workspace:*
       tsconfig: workspace:*
     dependencies:
       '@formatjs/icu-messageformat-parser': 2.1.14
+      '@ts-intl/shared': link:../shared
       '@types/json-schema': 7.0.11
       eslint: 8.29.0
       jsonc-eslint-parser: 2.1.0
       node-cache: 5.1.2
-      shared: link:../shared
     devDependencies:
       '@types/eslint': 8.4.10
       eslint-config-custom: link:../eslint-config-custom

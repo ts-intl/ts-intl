@@ -7,6 +7,13 @@
     "url": "https://github.com/hakonleung/ts-intl.git",
     "directory": "packages/eslint-plugin-ts-intl"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "description": "ESLint plugin for js/ts/jsx/tsx",
   "keywords": [
     "i18n",
@@ -18,11 +25,10 @@
     "jsx",
     "tsx"
   ],
-  "main": "./index.tsx",
-  "types": "./index.tsx",
   "license": "MIT",
   "homepage": "",
   "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "ts-check": "tsc --noEmit"
   },
@@ -32,7 +38,7 @@
     "eslint": "^8.29.0",
     "jsonc-eslint-parser": "^2.1.0",
     "node-cache": "^5.1.2",
-    "shared": "workspace:*"
+    "@ts-intl/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.10",

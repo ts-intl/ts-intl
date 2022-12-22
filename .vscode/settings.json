@@ -12,7 +12,7 @@
   "files.associations": {
     "turbo.json": "jsonc"
   },
-  "cSpell.words": ["quasis", "formatjs", "messageformat"],
+  "cSpell.words": ["quasis", "formatjs", "messageformat", "tsbuildinfo"],
   "files.exclude": {
     "**/.git": false
   },

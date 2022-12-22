@@ -1,4 +1,4 @@
-import { buildTrieByNSPath, Dictionary, NSPath, Trie } from 'shared';
+import { buildTrieByNSPath, Dictionary, NSPath, Trie } from '@ts-intl/shared';
 
 export const extractDictionary = (
   dict: Dictionary,

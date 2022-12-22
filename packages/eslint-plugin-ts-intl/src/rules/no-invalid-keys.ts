@@ -1,7 +1,7 @@
 import {
   DictionaryParseErrorType,
   getDictionaryControllerFsSingleton,
-} from 'shared';
+} from '@ts-intl/shared';
 
 import { Node } from '../node';
 import { createRule, getSchema } from '../utils/eslint';

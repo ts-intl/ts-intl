@@ -1,5 +1,5 @@
 import { TYPE } from '@formatjs/icu-messageformat-parser';
-import { getDictionaryControllerFsSingleton } from 'shared';
+import { getDictionaryControllerFsSingleton } from '@ts-intl/shared';
 
 import { Node } from '../node';
 import { createRule, getSchema } from '../utils/eslint';

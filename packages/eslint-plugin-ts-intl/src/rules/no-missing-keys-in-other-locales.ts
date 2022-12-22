@@ -1,10 +1,10 @@
-import { AST } from 'jsonc-eslint-parser';
-import { join, parse } from 'path';
 import {
   DictionaryController,
   DictionaryParseErrorType,
   getDictionaryControllerFs,
-} from 'shared';
+} from '@ts-intl/shared';
+import { AST } from 'jsonc-eslint-parser';
+import { join, parse } from 'path';
 
 import { createRule, getSchema } from '../utils/eslint';
 
