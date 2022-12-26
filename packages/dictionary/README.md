@@ -13,6 +13,12 @@ export type Dictionary = {
 };
 ```
 
+## Installation
+
+```bash
+npm install @ts-intl/dictionary
+```
+
 ## extractDictionary
 
 ### Interface
