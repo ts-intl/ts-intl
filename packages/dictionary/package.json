@@ -4,7 +4,7 @@
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hakonleung/ts-intl.git",
+    "url": "https://github.com/ts-intl/ts-intl.git",
     "directory": "packages/dictionary"
   },
   "description": "I18n dictionary/messages generator",
