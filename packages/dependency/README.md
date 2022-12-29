@@ -1,4 +1,4 @@
-## I18n keys dependency analysis
+# I18n keys dependency analysis
 
 Useful tools to help collect and reveal i18n keys usage, features:
 
@@ -167,3 +167,7 @@ const getDependenciesEnhancer = (
     };
   }>;
 ```
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

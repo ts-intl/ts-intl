@@ -1,4 +1,4 @@
-## I18n dictionary/messages generator
+# I18n dictionary/messages generator
 
 Generate dictionary/messages by locale object or file, features:
 
@@ -141,3 +141,7 @@ const customExtractDictionary = async () => {
   );
 };
 ```
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

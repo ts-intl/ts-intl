@@ -1,4 +1,4 @@
-## eslint-plugin-ts-intl
+# eslint-plugin-ts-intl
 
 ESLint plugin for `js/ts/jsx/tsx`, improving stability and efficiency of I18N project.
 
@@ -338,3 +338,7 @@ const eslintConfig = {
   "a2": "a </>" // error
 }
 ```
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
