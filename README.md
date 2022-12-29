@@ -9,6 +9,7 @@ A full process toolchain to improve i18n performance and efficiency.
 | [@ts-intl/dependency](packages/dependency/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Fdependency.svg)](https://badge.fury.io/js/@ts-intl%2Fdependency)                       |
 | [@ts-intl/dictionary](packages/dictionary/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Fdictionary.svg)](https://badge.fury.io/js/@ts-intl%2Fdictionary)                       |
 | [@ts-intl/eslint-plugin-ts-intl](packages/eslint-plugin-ts-intl/) | [![npm version](https://badge.fury.io/js/@ts-intl%2Feslint-plugin-ts-intl.svg)](https://badge.fury.io/js/@ts-intl%2Feslint-plugin-ts-intl) |
+| [@ts-intl/shared](packages/shared/)                               | [![npm version](https://badge.fury.io/js/@ts-intl%2Fshared.svg)](https://badge.fury.io/js/@ts-intl%2Fshared)                               |
 
 ## SSR Integration
 
