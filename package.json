@@ -4,9 +4,9 @@
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hakonleung/ts-intl.git"
+    "url": "https://github.com/ts-intl/ts-intl.git"
   },
-  "description": "",
+  "description": "Typescript i18n helpers",
   "keywords": [
     "i18n",
     "internationalization",
