@@ -4,7 +4,7 @@ type Configs = {
   dictionary: Dictionary;
   nsDivider: string;
   keyDivider: string;
-  cb: (path: string) => void;
+  cb: (path: string, value: string) => void;
 };
 
 export const traverseLeaves = ({
@@ -22,7 +22,7 @@ export const traverseLeaves = ({
   };
   const dfs = (node: Dictionary | string = dictionary) => {
     if (typeof node === 'string') {
-      cb(getPath());
+      cb(getPath(), node);
       return;
     }
     Object.entries(node).forEach(([key, next]) => {
