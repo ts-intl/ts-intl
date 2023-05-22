@@ -15,7 +15,9 @@
     "ssr",
     "typescript",
     "jsx",
-    "tsx"
+    "tsx",
+    "ai",
+    "openai"
   ],
   "private": true,
   "workspaces": [
