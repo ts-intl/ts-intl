@@ -125,7 +125,7 @@ Provide the descriptions of the keys (optional), which will help AI generate mor
 Sample:
 
 ```json
-// ./yourProject/en/ns1.json
+// ./yourLocalesPath/en/ns1.json
 {
   "key1": {
     "key2": {
@@ -139,20 +139,22 @@ Sample:
 When `nsDivider` is `"."`, `keyDivider` is `"."`
 
 ```json
-// ./yourProject/description.json
 {
-  "ns1.key1.key2.key3": "Bob is my best friend",
-  "ns1.key4": "Minted is a NFT trading platform"
+  "descriptions": {
+    "ns1.key1.key2.key3": "Bob is my best friend",
+    "ns1.key4": "Minted is a NFT trading platform"
+  }
 }
 ```
 
 When `nsDivider` is `":"`, `keyDivider` is `"."`
 
 ```json
-// ./yourProject/description.json
 {
-  "ns1:key1.key2.key3": "Bob is my best friend",
-  "ns1:key4": "Minted is a NFT trading platform"
+  "descriptions": {
+    "ns1:key1.key2.key3": "Bob is my best friend",
+    "ns1:key4": "Minted is a NFT trading platform"
+  }
 }
 ```
 
