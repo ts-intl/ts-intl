@@ -5,7 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "env": ["VSCODE_PID"]
+      "env": ["VSCODE_PID", "OPENAI_API_KEY"]
     },
     "lint": {
       "outputs": []

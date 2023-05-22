@@ -1,0 +1,14 @@
+{
+  "path": "[PATH]",
+  "basicLanguage": "en",
+  "languages": [],
+  "nsDivider": ".",
+  "keyDivider": ".",
+  "syntax": "icu",
+  "completionOptions": {
+    "preset": {
+      "override": false
+    }
+  },
+  "descriptions": {}
+}

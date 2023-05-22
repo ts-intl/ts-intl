@@ -1,0 +1,57 @@
+{
+  "name": "@ts-intl/translator",
+  "version": "0.0.1",
+  "author": "https://github.com/hakonleung",
+  "bin": {
+    "ts-intl-init-translator": "./dist/cjs/bin/init.js",
+    "ts-intl-translate": "./dist/cjs/bin/translate.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ts-intl/ts-intl.git",
+    "directory": "packages/translator"
+  },
+  "description": "AI Translator",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "json",
+    "ai",
+    "openai",
+    "GPT"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "license": "MIT",
+  "homepage": "",
+  "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs && pnpm copy-templates",
+    "copy-templates": "copyfiles -u 1 src/templates/* dist/cjs && copyfiles -u 1 src/templates/* dist/esm",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "ts-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ts-intl/dictionary": "workspace:*",
+    "@ts-intl/shared": "workspace:*",
+    "ansi-colors": "^4.1.3",
+    "cli-progress": "^3.12.0",
+    "dotenv": "^16.0.3",
+    "openai": "^3.2.1",
+    "safe-stable-stringify": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/cli-progress": "^3.11.0",
+    "copyfiles": "^2.4.1",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
+  }
+}

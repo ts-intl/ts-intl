@@ -1,0 +1,49 @@
+name: translator-shared
+
+on:
+  workflow_call:
+    inputs:
+      ENV:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENV }}
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Setup Node.js 16.18.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.18.1'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - name: Generate translations
+        run: |
+          npx ts-intl-translate --env=${{ inputs.ENV }}
+
+      - name: Commit files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config --global user.email "actions@github.com"
+            git config --global user.name "[BOT]"
+            git add .
+            git commit -m "feat: [AI Generated] translations" --no-verify
+            git push
+          else
+            echo "No changes"
+          fi

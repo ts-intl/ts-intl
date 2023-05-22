@@ -1,0 +1,15 @@
+name: translator-flow
+
+on:
+  push:
+    branches:
+      - '*'
+    paths:
+      - '[PATH]/**'
+
+jobs:
+  translator-shared:
+    uses: ./.github/workflows/translator-shared.yml
+    secrets: inherit
+    with:
+      ENV: production

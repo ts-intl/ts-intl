@@ -58,7 +58,7 @@ export class DictionaryController {
   };
 
   traverse = (
-    cb: (path: string) => void,
+    cb: (path: string, value: string) => void,
     nsDivider: string,
     keyDivider: string
   ) => {

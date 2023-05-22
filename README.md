@@ -10,16 +10,14 @@ A full process toolchain to improve i18n performance and efficiency.
 | [@ts-intl/dictionary](packages/dictionary/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Fdictionary.svg)](https://badge.fury.io/js/@ts-intl%2Fdictionary)                       |
 | [@ts-intl/eslint-plugin-ts-intl](packages/eslint-plugin-ts-intl/) | [![npm version](https://badge.fury.io/js/@ts-intl%2Feslint-plugin-ts-intl.svg)](https://badge.fury.io/js/@ts-intl%2Feslint-plugin-ts-intl) |
 | [@ts-intl/shared](packages/shared/)                               | [![npm version](https://badge.fury.io/js/@ts-intl%2Fshared.svg)](https://badge.fury.io/js/@ts-intl%2Fshared)                               |
+| [@ts-intl/translator](packages/translator/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Ftranslator.svg)](https://badge.fury.io/js/@ts-intl%2Ftranslator)                       |
 
 ## SSR Integration
 
 ### Cache dependencies when `npm prepare`
 
 ```ts
-import {
-  getDependenciesEnhancer,
-  getDependenciesFs,
-} from '@ts-intl/dependency';
+import { getDependenciesEnhancer, getDependenciesFs } from '@ts-intl/dependency';
 getDependenciesEnhancer(
   getDependenciesFs(
     entryDir,
@@ -29,12 +27,7 @@ getDependenciesEnhancer(
     syntaxConfig
   )
 ).then(({ graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys }) => {
-  return Promise.all([
-    writeDiskCache(graphCachePath, graph),
-    writeDiskCache(pkMapCachePath, pathIntlKeysMap),
-    writeDiskCache(entryKeysCachePath, moduleIntlKeysMap),
-    writeDiskCache(usedKeysCachePath, usedIntlKeys),
-  ]);
+  return Promise.all([writeDiskCache(graphCachePath, graph), writeDiskCache(pkMapCachePath, pathIntlKeysMap), writeDiskCache(entryKeysCachePath, moduleIntlKeysMap), writeDiskCache(usedKeysCachePath, usedIntlKeys)]);
 });
 ```
 
