@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/translator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "https://github.com/hakonleung",
   "bin": {
     "ts-intl-init-translator": "./dist/cjs/bin/init.js",
@@ -48,7 +48,11 @@
     "@types/cli-progress": "^3.11.0",
     "copyfiles": "^2.4.1",
     "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "typescript": "^4.9.4"
+  },
+  "peerDependencies": {
+    "typescript": "^4.9.4"
   },
   "engines": {
     "node": ">=14.0.0",
