@@ -1,3 +1,4 @@
+export * from './cacheDependencies';
 export * from './compiler/extractIntlKeysFromCode';
 export * from './getDependencies';
 export * from './getDependenciesByEntries';
