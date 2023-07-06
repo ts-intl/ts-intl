@@ -52,6 +52,10 @@ export const getProjectConfig = (
       ...conf.madgeConfig,
       ...originalConfig.madgeConfig,
     };
+
+    // conf.madgeConfig.excludeRegExp = conf.madgeConfig.excludeRegExp?.map(
+    //   (regExp) => (typeof regExp === 'string' ? new RegExp(regExp) : regExp)
+    // );
   }
   return resolveProjectPaths(root, conf);
 };

@@ -42,8 +42,8 @@ export const getLocaleDictionaryOfProject = (
   optimize?.include
     ? extractDictionaryFs({
         root: projectConfig.path.dictionary,
-        lng: projectConfig.locale.basic,
-        fallbackLng: locale,
+        lng: locale,
+        fallbackLng: projectConfig.locale.basic,
         ns: {
           include: optimize.entry
             ? buildNSPathWithCache(projectConfig, optimize.entry)
