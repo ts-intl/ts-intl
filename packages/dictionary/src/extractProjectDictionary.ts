@@ -10,7 +10,7 @@ import {
 
 import { extractDictionaryFs } from './extractDictionaryFs';
 
-export const getDictionaryOfProject = (
+export const extractProjectDictionary = (
   { projectConfig }: Pick<Project, 'projectConfig'>,
   optimize?: {
     reader?: Reader<Dictionary>;
@@ -29,7 +29,7 @@ export const getDictionaryOfProject = (
     )
   );
 
-export const getLocaleDictionaryOfProject = (
+export const extractProjectDictionaryWithLocale = (
   {
     projectConfig,
     cacheFilePaths,
