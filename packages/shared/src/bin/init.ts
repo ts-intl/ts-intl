@@ -1,4 +1,5 @@
-import { getDefaultProjectConfig, getProjectConfigPaths } from '../project';
-import { writeJsonFile } from '../utils';
+import { writeJsonFile } from '../fs';
+import { Project } from '../project';
 
-writeJsonFile(getProjectConfigPaths().project, getDefaultProjectConfig());
+// FIXME: split line
+writeJsonFile(Project.getConfigFilePaths().project, Project.getProjectConfig());

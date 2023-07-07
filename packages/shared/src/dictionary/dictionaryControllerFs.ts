@@ -1,8 +1,8 @@
 import { readdirSync, statSync, watch } from 'fs';
 import { join, parse, resolve } from 'path';
 
+import { readJsonFile } from '../fs';
 import { Dictionary } from '../types';
-import { readJsonFile } from '../utils';
 import {
   DictionaryController,
   DictionaryResolver,

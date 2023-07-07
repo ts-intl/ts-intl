@@ -1,6 +1,6 @@
-const { getProjectConfigFs } = require('@ts-intl/shared');
+const { Project } = require('@ts-intl/shared');
 
-const projectConfig = getProjectConfigFs();
+const { projectConfig } = Project.getSingleton();
 
 module.exports = {
   plugins: ['@ts-intl/eslint-plugin-ts-intl'],

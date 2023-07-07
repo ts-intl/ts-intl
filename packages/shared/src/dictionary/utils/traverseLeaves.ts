@@ -1,18 +1,14 @@
-import { Dictionary } from '../../types';
-
-type Configs = {
-  dictionary: Dictionary;
-  nsDivider: string;
-  keyDivider: string;
-  cb: (path: string, value: string) => void;
-};
+import { Dictionary, ProjectConfig } from '../../types';
 
 export const traverseLeaves = ({
   dictionary,
+  cb,
   nsDivider,
   keyDivider,
-  cb,
-}: Configs) => {
+}: {
+  dictionary: Dictionary;
+  cb: (path: string, value: string) => void;
+} & ProjectConfig['syntax']) => {
   const paths: string[] = [];
   const getPath = () => {
     const [ns, ...res] = paths;

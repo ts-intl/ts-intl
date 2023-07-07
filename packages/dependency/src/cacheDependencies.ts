@@ -1,21 +1,19 @@
-import {
-  getDepsCachePaths,
-  ProjectConfig,
-  readJsonFile,
-  writeJsonFile,
-} from '@ts-intl/shared';
+import { Project, readJsonFile, writeJsonFile } from '@ts-intl/shared';
 
 import { getDependenciesEnhancer } from './getDependenciesEnhancer';
 import { getDependenciesFs } from './getDependenciesFs';
 
-export const cacheDependencies = (projectConfig: ProjectConfig) => {
+export const cacheDependencies = ({
+  projectConfig,
+  cacheFilePaths,
+}: Pick<Project, 'projectConfig' | 'cacheFilePaths'>) => {
   getDependenciesEnhancer(
     getDependenciesFs(
       projectConfig.path.entry,
       {
         madgeConfig: {
           ...projectConfig.madgeConfig,
-          baseDir: projectConfig.path.root,
+          baseDir: projectConfig.path.base,
         },
       },
       {
@@ -24,24 +22,23 @@ export const cacheDependencies = (projectConfig: ProjectConfig) => {
       }
     )
   ).then(({ graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys }) => {
-    const depsCachePaths = getDepsCachePaths(projectConfig.path.cache);
-    logEntriesDiff(moduleIntlKeysMap, depsCachePaths.cacheKeysOfEntries);
+    logEntriesDiff(moduleIntlKeysMap, cacheFilePaths.keysOfEntries);
     return Promise.all([
-      writeJsonFile(depsCachePaths.cacheGraph, graph),
-      writeJsonFile(depsCachePaths.cacheKeysOfPaths, pathIntlKeysMap),
-      writeJsonFile(depsCachePaths.cacheKeysOfEntries, moduleIntlKeysMap),
-      writeJsonFile(depsCachePaths.cacheUsedKeys, usedIntlKeys),
+      writeJsonFile(cacheFilePaths.graph, graph),
+      writeJsonFile(cacheFilePaths.keysOfPaths, pathIntlKeysMap),
+      writeJsonFile(cacheFilePaths.keysOfEntries, moduleIntlKeysMap),
+      writeJsonFile(cacheFilePaths.usedKeys, usedIntlKeys),
     ]);
   });
 };
 
 const logEntriesDiff = (
   modulesUsedKeys: Record<string, string[] | undefined>,
-  cacheKeysOfEntries: string
+  keysOfEntries: string
 ) => {
   let old: typeof modulesUsedKeys = {};
   try {
-    old = readJsonFile(cacheKeysOfEntries);
+    old = readJsonFile(keysOfEntries);
   } catch (err) {
     // console.error(err);
   }

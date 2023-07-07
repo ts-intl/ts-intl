@@ -1,11 +1,11 @@
-import { ProjectConfig } from './types';
+import { ProjectConfig } from '../types';
 
 export const getDefaultProjectConfig = (): ProjectConfig =>
   JSON.parse(JSON.stringify(defaultProjectConfig));
 
 const defaultProjectConfig: Readonly<ProjectConfig> = {
   path: {
-    root: '.',
+    base: '.',
     dictionary: 'src/locales',
     entry: 'src',
     cache: '.i18n',

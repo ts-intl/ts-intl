@@ -1,17 +1,16 @@
 import {
   buildNSPathByKeys,
   Dictionary,
-  getDepsCachePaths,
   getDictionaryControllerFs,
   NSPath,
-  ProjectConfig,
+  Project,
   readJsonFile,
 } from '@ts-intl/shared';
 
 import { extractDictionaryFs } from './extractDictionaryFs';
 
 export const getDictionaryOfProject = (
-  projectConfig: ProjectConfig,
+  { projectConfig }: Pick<Project, 'projectConfig'>,
   optimize?: {
     parseJsonFile?: (jsonPath: string) => Dictionary;
   }
@@ -30,7 +29,10 @@ export const getDictionaryOfProject = (
   );
 
 export const getLocaleDictionaryOfProject = (
-  projectConfig: ProjectConfig,
+  {
+    projectConfig,
+    cacheFilePaths,
+  }: Pick<Project, 'projectConfig' | 'cacheFilePaths'>,
   locale: string,
   optimize?: {
     parseJsonFile?: (jsonPath: string) => Dictionary;
@@ -46,7 +48,12 @@ export const getLocaleDictionaryOfProject = (
         fallbackLng: projectConfig.locale.basic,
         ns: {
           include: optimize.entry
-            ? buildNSPathWithCache(projectConfig, optimize.entry)
+            ? buildNSPathByKeys(
+                readJsonFile(cacheFilePaths.keysOfEntries)[optimize.entry] ??
+                  [],
+                projectConfig.syntax.nsDivider,
+                projectConfig.syntax.keyDivider
+              )
             : optimize.include,
           exclude: optimize.exclude,
         },
@@ -57,12 +64,3 @@ export const getLocaleDictionaryOfProject = (
         locale,
         parseJsonFile: optimize?.parseJsonFile,
       }).dictionary;
-
-const buildNSPathWithCache = (projectConfig: ProjectConfig, entry: string) =>
-  buildNSPathByKeys(
-    readJsonFile(
-      getDepsCachePaths(projectConfig.path.cache).cacheKeysOfEntries
-    )[entry] ?? [],
-    projectConfig.syntax.nsDivider,
-    projectConfig.syntax.keyDivider
-  );
