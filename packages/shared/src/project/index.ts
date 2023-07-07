@@ -27,7 +27,7 @@ export class Project {
   constructor(root?: string, reader?: Reader<ProjectConfig>) {
     this.root = root ?? process.cwd();
 
-    this.configFilePaths = Project.getConfigFilePaths();
+    this.configFilePaths = Project.getConfigFilePaths(this.root);
 
     this.projectConfig = Project.getProjectConfig(
       this.root,
