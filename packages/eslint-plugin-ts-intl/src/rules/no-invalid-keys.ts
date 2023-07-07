@@ -21,7 +21,7 @@ export const noInvalidKeys = createRule({
       'funcNamePattern',
       'hookNamePattern',
       'richNamePattern',
-      'namespaceDivider',
+      'nsDivider',
       'keyDivider',
       'fallbackNamespace',
       'localePath',
@@ -29,13 +29,8 @@ export const noInvalidKeys = createRule({
     ]),
   },
   create(context) {
-    const {
-      localePath,
-      locale,
-      keyDivider,
-      namespaceDivider,
-      fallbackNamespace,
-    } = context.options[0] || {};
+    const { localePath, locale, keyDivider, nsDivider, fallbackNamespace } =
+      context.options[0] || {};
     const controller = DictionaryController.getControllerSingletonFs({
       localePath,
       locale,
@@ -49,7 +44,7 @@ export const noInvalidKeys = createRule({
         const key = getStaticLiteralValue(node.arguments[0] as Node);
         const { errorType, msg = '' } = controller.hasPathToLeaf(
           key,
-          namespaceDivider,
+          nsDivider,
           keyDivider
         );
         if (!errorType) return;
@@ -59,13 +54,12 @@ export const noInvalidKeys = createRule({
               node,
               message: 'no namespace provided',
               fix(fixer) {
-                const prependNs = (ns: string) =>
-                  [ns, key].join(namespaceDivider);
+                const prependNs = (ns: string) => [ns, key].join(nsDivider);
                 const existNs = Object.keys(controller.dictionary).find(
                   (ns) =>
                     !controller.hasPathToLeaf(
                       prependNs(ns),
-                      namespaceDivider,
+                      nsDivider,
                       keyDivider
                     ).errorType
                 );

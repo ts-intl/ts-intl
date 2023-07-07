@@ -30,13 +30,7 @@ export const noMissingKeysInOtherLocales = createRule({
       category: 'Best Practices',
       recommended: false,
     },
-    ...getSchema([
-      'namespaceDivider',
-      'keyDivider',
-      'otherLocales',
-      'localePath',
-      'locale',
-    ]),
+    ...getSchema(['nsDivider', 'keyDivider', 'others', 'localePath', 'locale']),
   },
   create(context) {
     if (!context.parserServices.isJSON) return {};
@@ -44,8 +38,8 @@ export const noMissingKeysInOtherLocales = createRule({
     const {
       localePath,
       locale,
-      otherLocales = [],
-      namespaceDivider,
+      others = [],
+      nsDivider,
       keyDivider,
     } = context.options[0] || {};
 
@@ -64,13 +58,13 @@ export const noMissingKeysInOtherLocales = createRule({
       path.push(key);
       const [namespace, ...keys] = path;
       const pathString = keys.length
-        ? [namespace, keys.join(keyDivider)].join(namespaceDivider)
+        ? [namespace, keys.join(keyDivider)].join(nsDivider)
         : namespace;
-      otherLocales.forEach((locale: string) => {
+      others.forEach((locale: string) => {
         const controller = getLocale(localePath, locale);
         const { errorType, msg } = controller.hasPathToLeaf(
           pathString,
-          namespaceDivider,
+          nsDivider,
           keyDivider
         );
         if (errorType === undefined && msg) return;

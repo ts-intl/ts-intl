@@ -5,33 +5,16 @@ const { projectConfig } = Project.getSingleton();
 module.exports = {
   plugins: ['@ts-intl/eslint-plugin-ts-intl'],
   rules: {
-    '@ts-intl/ts-intl/no-dynamic-keys': [
-      'error',
-      {
-        funcNamePattern: projectConfig.integration.funcNamePattern,
-        hookNamePattern: projectConfig.integration.hookNamePattern,
-        richNamePattern: projectConfig.integration.richNamePattern,
-      },
-    ],
-    '@ts-intl/ts-intl/no-nested-call': [
-      'error',
-      {
-        funcNamePattern: projectConfig.integration.funcNamePattern,
-        hookNamePattern: projectConfig.integration.hookNamePattern,
-        richNamePattern: projectConfig.integration.richNamePattern,
-      },
-    ],
+    '@ts-intl/ts-intl/no-dynamic-keys': ['error', projectConfig.integration],
+    '@ts-intl/ts-intl/no-nested-call': ['error', projectConfig.integration],
     '@ts-intl/ts-intl/no-invalid-keys': [
       'error',
       {
-        fallbackNamespace: 'common',
-        funcNamePattern: projectConfig.integration.funcNamePattern,
-        hookNamePattern: projectConfig.integration.hookNamePattern,
-        richNamePattern: projectConfig.integration.richNamePattern,
-        namespaceDivider: projectConfig.syntax.nsDivider,
-        keyDivider: projectConfig.syntax.keyDivider,
         localePath: projectConfig.path.dictionary,
         locale: projectConfig.locale.basic,
+        fallbackNamespace: 'common',
+        ...projectConfig.integration,
+        ...projectConfig.syntax,
       },
     ],
     '@ts-intl/ts-intl/no-namespace-hooks': [
@@ -43,13 +26,10 @@ module.exports = {
     '@ts-intl/ts-intl/syntax-icu-ts': [
       'error',
       {
-        funcNamePattern: projectConfig.integration.funcNamePattern,
-        hookNamePattern: projectConfig.integration.hookNamePattern,
-        richNamePattern: projectConfig.integration.richNamePattern,
-        namespaceDivider: projectConfig.syntax.nsDivider,
-        keyDivider: projectConfig.syntax.keyDivider,
         localePath: projectConfig.path.dictionary,
         locale: projectConfig.locale.basic,
+        ...projectConfig.integration,
+        ...projectConfig.syntax,
       },
     ],
     '@ts-intl/ts-intl/no-mismatch-t': [
@@ -81,9 +61,8 @@ module.exports = {
           {
             localePath: projectConfig.path.dictionary,
             locale: projectConfig.locale.basic,
-            otherLocales: projectConfig.locale.others,
-            namespaceDivider: projectConfig.syntax.nsDivider,
-            keyDivider: projectConfig.syntax.keyDivider,
+            others: projectConfig.locale.others,
+            ...projectConfig.syntax,
           },
         ],
       },

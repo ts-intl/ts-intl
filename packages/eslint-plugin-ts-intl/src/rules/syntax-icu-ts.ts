@@ -19,20 +19,15 @@ export const syntaxIcuTs = createRule({
       'funcNamePattern',
       'hookNamePattern',
       'richNamePattern',
-      'namespaceDivider',
+      'nsDivider',
       'keyDivider',
       'localePath',
       'locale',
     ]),
   },
   create(context) {
-    const {
-      localePath,
-      locale,
-      keyDivider,
-      namespaceDivider,
-      richNamePattern,
-    } = context.options[0] || {};
+    const { localePath, locale, keyDivider, nsDivider, richNamePattern } =
+      context.options[0] || {};
     const baseController = DictionaryController.getControllerSingletonFs({
       localePath,
       locale,
@@ -46,7 +41,7 @@ export const syntaxIcuTs = createRule({
         const key = getStaticLiteralValue(node.arguments[0] as Node);
         const { errorType, msg = '' } = baseController.hasPathToLeaf(
           key,
-          namespaceDivider,
+          nsDivider,
           keyDivider
         );
         // no-invalid-keys would handle invalid key
