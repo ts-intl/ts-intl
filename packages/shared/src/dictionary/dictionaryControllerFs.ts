@@ -2,7 +2,7 @@ import { readdirSync, statSync, watch } from 'fs';
 import { join, parse, resolve } from 'path';
 
 import { Dictionary } from '../types';
-import { defaultJsonFileParser } from '../utils';
+import { readJsonFile } from '../utils';
 import {
   DictionaryController,
   DictionaryResolver,
@@ -25,7 +25,7 @@ export const getDictionaryControllerFsSingleton = (configs: Configs) => {
 export const getDictionaryControllerFs = ({
   fullPath,
   locale,
-  parseJsonFile = defaultJsonFileParser,
+  parseJsonFile = readJsonFile,
   watchMode = false, // watch only when run by vscode-eslint, command line should not watch which would cause eslint not exit
 }: Configs) => {
   return getDictionaryController(

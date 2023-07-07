@@ -14,7 +14,7 @@ export const getProjectConfig = (
 ): ProjectConfig => {
   const conf = getDefaultProjectConfig();
   if (!originalConfig || typeof originalConfig !== 'object') {
-    return resolveProjectPaths(root, conf);
+    throw new Error('No Project Config Found!');
   }
   if ('path' in originalConfig && typeof originalConfig.path === 'object') {
     conf.path = {

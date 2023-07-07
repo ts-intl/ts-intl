@@ -1,9 +1,9 @@
 import {
   buildTrieByNSPath,
-  defaultJsonFileParser,
   Dictionary,
   getFsResolver,
   NSPath,
+  readJsonFile,
   Trie,
 } from '@ts-intl/shared';
 
@@ -25,7 +25,7 @@ export const extractDictionaryFs = ({
   lng,
   fallbackLng,
   ns: { include, exclude },
-  parseJsonFile = defaultJsonFileParser,
+  parseJsonFile = readJsonFile,
 }: Configs) => {
   const includeTrie = buildTrieByNSPath(include);
   const excludeTrie = exclude?.length ? buildTrieByNSPath(exclude) : undefined;

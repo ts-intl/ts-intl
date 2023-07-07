@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/translator",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "author": "https://github.com/hakonleung",
   "bin": {
     "ts-intl-init-translator": "./dist/cjs/bin/init.js",

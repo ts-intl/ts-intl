@@ -1,7 +1,7 @@
+import { readJsonFile } from '@ts-intl/shared';
 import { join } from 'path';
 
 import { ProjectConfig } from './types';
-import { readJsonFile } from './utils/readFile';
 
 export const ROOT_PATH = process.cwd();
 export const CONFIG_PATH = 'ts-intl-translator.config.json';
