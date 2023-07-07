@@ -1,13 +1,9 @@
-import type { MadgeConfig as OriginMadgeConfig } from 'madge';
+import { ProjectConfig } from '@ts-intl/shared';
 
 export type DepsGraph = Record<string, string[]>;
 export type PathIntlKeysMap = Record<string, string[]>;
 
-export type MadgeConfig = Omit<OriginMadgeConfig, 'baseDir'> & {
-  baseDir: string;
-};
-
-export interface IFileStatus<T extends string> {
+interface IFileStatus<T extends string> {
   type: T;
   from: string;
   to?: string;
@@ -24,7 +20,9 @@ export type FileStatus = Modified | Deleted | NewFile | Renamed;
 export interface IOpts {
   extractIntlKeys: (module: string) => string[] | Promise<string[]>;
   ignoreCollectDeps?: boolean;
-  madgeConfig: MadgeConfig;
+  madgeConfig: ProjectConfig['madgeConfig'] & {
+    baseDir: string;
+  };
 }
 
 export interface IContext {
@@ -37,8 +35,13 @@ export interface IAction<S = FileStatus> {
 }
 
 export type ExtractIntlKeysOpts = {
-  funcNamePattern: string;
-  hookNamePattern?: string;
-  richNamePattern?: string;
   argIdx?: number;
+} & Partial<ProjectConfig['integration']>;
+
+export type GetDependenciesRes = {
+  graph: DepsGraph;
+  pathIntlKeysMap: PathIntlKeysMap;
+  modules: string[];
 };
+
+export type PipeDependenciesRes<T> = (res: GetDependenciesRes) => T;

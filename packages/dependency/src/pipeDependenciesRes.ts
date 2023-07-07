@@ -1,10 +1,13 @@
-import { getDependencies } from './getDependencies';
+import { PipeDependenciesRes } from './types';
 import { getModuleIntlKeysMap } from './utils';
 
-export const getDependenciesEnhancer = async (
-  res: ReturnType<typeof getDependencies>
-) => {
-  const { modules, graph, pathIntlKeysMap } = await res;
+export const pipeDependenciesRes: PipeDependenciesRes<{
+  graph: Record<string, string[]>;
+  modules: string[];
+  pathIntlKeysMap: Record<string, string[]>;
+  moduleIntlKeysMap: Record<string, string[]>;
+  usedIntlKeys: Record<string, boolean>;
+}> = ({ modules, graph, pathIntlKeysMap }) => {
   const moduleIntlKeysMap = Object.fromEntries(
     modules.map((module) => [
       module,
