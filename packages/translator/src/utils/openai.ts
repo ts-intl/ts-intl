@@ -1,6 +1,7 @@
+import { ProjectConfig } from '@ts-intl/shared';
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 
-import { CompletionMsg, ProjectConfig } from '../types';
+import { CompletionMsg } from '../types';
 
 export const initApi = (apiKey?: string) => {
   if (!apiKey) return;
@@ -14,7 +15,7 @@ export const initApi = (apiKey?: string) => {
 export const getCompletion = async (
   instance: OpenAIApi,
   msg: CompletionMsg,
-  opts?: ProjectConfig['completionOptions']
+  opts?: NonNullable<ProjectConfig['translator']>['completionOptions']
 ): Promise<{
   data?: Awaited<ReturnType<OpenAIApi['createChatCompletion']>>['data'];
   error?: unknown;
@@ -39,7 +40,9 @@ export const getCompletion = async (
 };
 
 const combineContexts = (
-  preset: NonNullable<ProjectConfig['completionOptions']>['preset'] = {}
+  preset: NonNullable<
+    NonNullable<ProjectConfig['translator']>['completionOptions']
+  >['preset'] = {}
 ): ChatCompletionRequestMessage[] => {
   const { override, presets = [] } = preset;
   const context = override ? [] : [CONTEXT_1, CONTEXT_2];

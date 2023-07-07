@@ -1,40 +1,28 @@
+import { Project } from '@ts-intl/shared';
 import { existsSync } from 'fs';
 import { copyFile, mkdir, readFile, writeFile } from 'fs/promises';
-import { join } from 'path';
+import { join, relative } from 'path';
 
-import {
-  CONFIG_PATH,
-  DEFAULT_FLOW_PATH,
-  ROOT_PATH,
-  SHARED_FLOW_PATH,
-} from '../configs';
-import { parseArgv } from './parseArgv';
+const SHARED_FLOW_PATH = 'translator-shared.yml';
+const DEFAULT_FLOW_PATH = 'translator-flow.yml';
 
 const templatePath = join(__dirname, '../templates');
-const configTemplatePath = join(templatePath, 'config.json');
 const flowTemplatePath = join(templatePath, 'flow.yml');
 const sharedFlowTemplatePath = join(templatePath, 'shared.yml');
 
-const configAbsolutePath = join(ROOT_PATH, CONFIG_PATH);
-const flowAbsolutePath = join(ROOT_PATH, '.github/workflows');
+const flowAbsolutePath = join(process.cwd(), '.github/workflows');
 
 const init = async () => {
-  const { path } = parseArgv();
-  if (!path) {
-    throw new Error('Locale path is required');
+  let path: string | undefined;
+  try {
+    path = new Project().projectConfig.path.dictionary;
+  } catch (err) {
+    //
   }
-  return Promise.all([writeConf(path), writeFlow(path)]);
-};
-
-const writeConf = async (localPath: string) => {
-  if (existsSync(configAbsolutePath)) return;
-  await writeFile(
-    configAbsolutePath,
-    (
-      await readFile(configTemplatePath, 'utf-8')
-    ).replace(/\[PATH\]/g, localPath),
-    'utf-8'
-  );
+  if (!path) {
+    throw new Error('Please init project config file first: npx ts-intl-init');
+  }
+  return writeFlow(relative(process.cwd(), path));
 };
 
 const writeFlow = async (localPath: string) => {

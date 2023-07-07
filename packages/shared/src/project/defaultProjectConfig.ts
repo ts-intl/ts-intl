@@ -27,6 +27,15 @@ const defaultProjectConfig: Readonly<ProjectConfig> = {
     richNamePattern: '^rich$',
   },
 
+  translator: {
+    completionOptions: {
+      preset: {
+        override: false,
+      },
+    },
+    descriptions: {},
+  },
+
   madgeConfig: {
     fileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     excludeRegExp: [],

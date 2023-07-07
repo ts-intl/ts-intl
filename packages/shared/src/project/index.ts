@@ -45,14 +45,17 @@ export class Project {
       eslint: join(root, FILE_NAMES.eslint),
     };
   }
+  static getDefaultProjectConfig() {
+    return getDefaultProjectConfig();
+  }
   static getProjectConfig(
     root?: string,
     projectConfig?: unknown
   ): ProjectConfig {
     root = root ?? process.cwd();
-    const conf = getDefaultProjectConfig();
+    const conf = Project.getDefaultProjectConfig();
     if (!projectConfig || typeof projectConfig !== 'object') {
-      return resolveProjectPaths(root, conf);
+      throw new Error('Project config is required');
     }
     if ('path' in projectConfig && typeof projectConfig.path === 'object') {
       conf.path = {
@@ -80,6 +83,15 @@ export class Project {
       conf.integration = {
         ...conf.integration,
         ...projectConfig.integration,
+      };
+    }
+    if (
+      'translator' in projectConfig &&
+      typeof projectConfig.translator === 'object'
+    ) {
+      conf.translator = {
+        ...conf.translator,
+        ...projectConfig.translator,
       };
     }
     if (

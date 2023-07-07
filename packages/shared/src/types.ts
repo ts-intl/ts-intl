@@ -41,6 +41,20 @@ export type ProjectConfig = {
     richNamePattern: string;
   };
 
+  translator?: {
+    completionOptions?: {
+      preset?: {
+        override?: boolean;
+        presets?: {
+          role: 'system' | 'user' | 'assistant';
+          content: string;
+          name?: string;
+        }[];
+      };
+    };
+    descriptions?: Record<string, string | undefined>;
+  };
+
   madgeConfig: {
     /**
      * Base directory to use instead of the default.

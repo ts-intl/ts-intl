@@ -1,11 +1,9 @@
 import { extractDictionary } from '@ts-intl/dictionary';
-import { Dictionary } from '@ts-intl/shared';
+import { Dictionary, Project } from '@ts-intl/shared';
 import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { stringify } from 'safe-stable-stringify';
 
-import { readConfig, ROOT_PATH } from '../configs';
-import { ProjectConfig } from '../types';
 import {
   extractMissingPairs,
   getControllers,
@@ -14,17 +12,16 @@ import {
 } from './controller';
 
 export class Translator {
-  public projectConfig: ProjectConfig;
+  public project: Project;
   public baseController: ReturnType<typeof getControllers>[0];
   public otherControllers: ReturnType<typeof getControllers>;
   public missing: ReturnType<typeof extractMissingPairs>;
   public translated: Record<string, Dictionary>;
 
   constructor() {
-    this.projectConfig = readConfig();
-    this.projectConfig.path = join(ROOT_PATH, this.projectConfig.path);
-    const controllers = getControllers(this.projectConfig);
-    this.missing = extractMissingPairs(this.projectConfig, controllers);
+    this.project = new Project();
+    const controllers = getControllers(this.project.projectConfig);
+    this.missing = extractMissingPairs(this.project.projectConfig, controllers);
     this.baseController = controllers[0];
     this.otherControllers = controllers.slice(1);
 
@@ -52,8 +49,8 @@ export class Translator {
       dict,
       parsePath(
         path,
-        this.projectConfig.nsDivider,
-        this.projectConfig.keyDivider
+        this.project.projectConfig.syntax.nsDivider,
+        this.project.projectConfig.syntax.keyDivider
       )
     );
     if (removeEmpty && !value) {
@@ -68,7 +65,10 @@ export class Translator {
       Object.entries(this.translated).map(([locale, dict]) =>
         Promise.all(
           Object.entries(dict).map(async ([namespace, child]) => {
-            const directory = join(this.projectConfig.path, locale);
+            const directory = join(
+              this.project.projectConfig.path.dictionary,
+              locale
+            );
             await mkdir(directory, { recursive: true });
             return writeFile(
               join(directory, `${namespace}.json`),
