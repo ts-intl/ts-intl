@@ -1,7 +1,6 @@
 import {
   DictionaryController,
   DictionaryParseErrorType,
-  getDictionaryControllerFs,
 } from '@ts-intl/shared';
 import { AST } from 'jsonc-eslint-parser';
 import { join, parse } from 'path';
@@ -10,14 +9,14 @@ import { createRule, getSchema } from '../utils/eslint';
 
 const otherLocaleController: Record<string, DictionaryController> = {};
 const getLocale = (
-  fullPath: string,
+  localePath: string,
   locale: string,
   watchMode = process.env.VSCODE_PID !== undefined
 ) => {
-  return (otherLocaleController[`${fullPath}-${locale}`] =
-    otherLocaleController[`${fullPath}-${locale}`] ||
-    getDictionaryControllerFs({
-      fullPath,
+  return (otherLocaleController[`${localePath}-${locale}`] =
+    otherLocaleController[`${localePath}-${locale}`] ||
+    DictionaryController.getControllerFs({
+      localePath,
       locale,
       watchMode,
     }));
@@ -35,7 +34,7 @@ export const noMissingKeysInOtherLocales = createRule({
       'namespaceDivider',
       'keyDivider',
       'otherLocales',
-      'fullPath',
+      'localePath',
       'locale',
     ]),
   },
@@ -43,15 +42,15 @@ export const noMissingKeysInOtherLocales = createRule({
     if (!context.parserServices.isJSON) return {};
     const filename = context.getFilename();
     const {
-      fullPath,
+      localePath,
       locale,
       otherLocales = [],
       namespaceDivider,
       keyDivider,
     } = context.options[0] || {};
 
-    const isEntry = filename === join(fullPath, `${locale}.json`);
-    const isNsFile = parse(filename).dir === join(fullPath, locale);
+    const isEntry = filename === join(localePath, `${locale}.json`);
+    const isNsFile = parse(filename).dir === join(localePath, locale);
     if (!isEntry && !isNsFile) return {};
 
     const path: string[] = [];
@@ -68,7 +67,7 @@ export const noMissingKeysInOtherLocales = createRule({
         ? [namespace, keys.join(keyDivider)].join(namespaceDivider)
         : namespace;
       otherLocales.forEach((locale: string) => {
-        const controller = getLocale(fullPath, locale);
+        const controller = getLocale(localePath, locale);
         const { errorType, msg } = controller.hasPathToLeaf(
           pathString,
           namespaceDivider,
@@ -90,7 +89,8 @@ export const noMissingKeysInOtherLocales = createRule({
         loc: node.key.loc,
         message: missingLocals
           .map(
-            ([lng, target]) => `missing '${pathString}' ${target} in '${lng}'`
+            ([locale, target]) =>
+              `missing '${pathString}' ${target} in '${locale}'`
           )
           .join(', '),
       });

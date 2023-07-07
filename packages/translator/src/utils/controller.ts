@@ -1,11 +1,11 @@
-import { Dictionary, getDictionaryControllerFs } from '@ts-intl/shared';
+import { Dictionary, DictionaryController } from '@ts-intl/shared';
 
 import { ProjectConfig, TranslateNeeded } from '../types';
 
 export const getControllers = (config: ProjectConfig) =>
   [config.basicLanguage, ...config.languages].map((locale) => ({
-    controller: getDictionaryControllerFs({
-      fullPath: config.path,
+    controller: DictionaryController.getControllerFs({
+      localePath: config.path,
       locale,
     }),
     locale,

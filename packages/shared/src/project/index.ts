@@ -1,15 +1,14 @@
 import { join, resolve } from 'path';
 
 import { readJsonFile } from '../fs';
-import { ProjectConfig } from '../types';
+import { ProjectConfig, Reader } from '../types';
 import { FILE_NAMES } from './constants';
 import { getDefaultProjectConfig } from './defaultProjectConfig';
 
 export class Project {
   static singleton?: Project;
-  static getSingleton(root?: string, projectConfig?: unknown) {
-    return (Project.singleton =
-      Project.singleton ?? new Project(root, projectConfig));
+  static getSingleton(root?: string, reader?: Reader<ProjectConfig>) {
+    return (Project.singleton = Project.singleton ?? new Project(root, reader));
   }
 
   public root: string;
@@ -25,14 +24,15 @@ export class Project {
     usedKeys: string;
   };
 
-  constructor(root?: string, projectConfig?: unknown) {
+  constructor(root?: string, reader?: Reader<ProjectConfig>) {
     this.root = root ?? process.cwd();
 
     this.configFilePaths = Project.getConfigFilePaths();
 
-    projectConfig = projectConfig ?? readJsonFile(this.configFilePaths.project);
-
-    this.projectConfig = Project.getProjectConfig(this.root, projectConfig);
+    this.projectConfig = Project.getProjectConfig(
+      this.root,
+      (reader ?? readJsonFile)(this.configFilePaths.project)
+    );
 
     this.cacheFilePaths = Project.getCacheFilePaths(
       this.projectConfig.path.cache

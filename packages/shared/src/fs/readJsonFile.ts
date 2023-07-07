@@ -1,4 +1,4 @@
 import { readFileSync } from 'fs';
 
-export const readJsonFile = (fullPath: string) =>
-  JSON.parse(readFileSync(fullPath, 'utf-8'));
+export const readJsonFile = (path: string) =>
+  JSON.parse(readFileSync(path, 'utf-8'));

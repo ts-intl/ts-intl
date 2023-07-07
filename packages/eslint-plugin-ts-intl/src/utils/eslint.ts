@@ -30,7 +30,7 @@ export const defaultSchemaProperties = {
   fallbackNamespace: {
     type: 'string',
   },
-  fullPath: {
+  localePath: {
     type: 'string',
   },
   locale: {

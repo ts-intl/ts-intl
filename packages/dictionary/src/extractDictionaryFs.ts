@@ -1,43 +1,41 @@
 import {
   buildTrieByNSPath,
   Dictionary,
-  getFsResolver,
+  dictionaryResolverFs,
   NSPath,
+  Reader,
   readJsonFile,
   Trie,
 } from '@ts-intl/shared';
 
 import { extractDictionary } from './extractDictionary';
 
-type Configs = {
-  root: string;
-  lng: string;
-  fallbackLng?: string;
-  ns: {
-    include: NSPath;
-    exclude?: NSPath;
-  };
-  parseJsonFile?: (jsonPath: string) => Dictionary;
-};
-
 export const extractDictionaryFs = ({
-  root,
-  lng,
-  fallbackLng,
-  ns: { include, exclude },
-  parseJsonFile = readJsonFile,
-}: Configs) => {
+  localePath,
+  locale,
+  basicLocale,
+  include,
+  exclude,
+  reader = readJsonFile,
+}: {
+  localePath: string;
+  locale: string;
+  include: NSPath;
+  basicLocale?: string;
+  exclude?: NSPath;
+  reader?: Reader<Dictionary>;
+}) => {
   const includeTrie = buildTrieByNSPath(include);
   const excludeTrie = exclude?.length ? buildTrieByNSPath(exclude) : undefined;
-  const [lngDict, fallbackDict] = [lng, fallbackLng].map((lng) =>
-    initDictionaryFs(root, parseJsonFile, includeTrie, excludeTrie, lng)
+  const [lngDict, fallbackDict] = [locale, basicLocale].map((locale) =>
+    initDictionaryFs(localePath, reader, includeTrie, excludeTrie, locale)
   );
   return extractDictionary(lngDict, fallbackDict, includeTrie, excludeTrie);
 };
 
 const initDictionaryFs = (
-  root: string,
-  parseJsonFile: NonNullable<Configs['parseJsonFile']>,
+  localePath: string,
+  reader: Reader<Dictionary>,
   includeTrie: Trie,
   excludeTrie?: Trie,
   locale?: string
@@ -48,7 +46,12 @@ const initDictionaryFs = (
     if (!v.name || excludeTrie?.get(v.name)?.isLeaf) return;
     include.push(v.name);
   });
-  const { dictionary } = getFsResolver(root, locale, parseJsonFile, include)();
+  const { dictionary } = dictionaryResolverFs(
+    localePath,
+    locale,
+    reader,
+    include
+  );
   return include.reduce((res, namespace) => {
     res[namespace] = dictionary?.[namespace] ?? {};
     return res;

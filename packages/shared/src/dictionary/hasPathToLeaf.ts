@@ -1,8 +1,4 @@
-import {
-  Dictionary,
-  DictionaryParseErrorType,
-  ProjectConfig,
-} from '../../types';
+import { Dictionary, DictionaryParseErrorType, ProjectConfig } from '../types';
 
 export const hasPathToLeaf = ({
   dictionary,

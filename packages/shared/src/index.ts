@@ -1,5 +1,6 @@
-export * from './dictionary';
-export * from './fs';
+export { DictionaryController, dictionaryResolverFs } from './dictionary';
+export { readJsonFile, writeJsonFile } from './fs';
 export { Project } from './project';
-export * from './trie';
-export * from './types';
+export { buildNSPathByKeys, buildTrieByNSPath, Trie } from './trie';
+export type { Dictionary, NSPath, ProjectConfig, Reader } from './types';
+export { DictionaryParseErrorType } from './types';

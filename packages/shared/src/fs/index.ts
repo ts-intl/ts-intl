@@ -1,2 +1,2 @@
-export * from './readJsonFile';
-export * from './writeJsonFile';
+export { readJsonFile } from './readJsonFile';
+export { writeJsonFile } from './writeJsonFile';

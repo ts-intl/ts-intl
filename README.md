@@ -45,9 +45,9 @@ const getDictionary = (entryPath: string, locale = 'en') => {
     syntaxConfig.keyDivider
   );
   return extractDictionaryFs({
-    root: resolve(process.cwd(), 'src/locales'),
-    lng: locale,
-    fallbackLng: 'en',
+    localePath: resolve(process.cwd(), 'src/locales'),
+    locale,
+    basicLocale: 'en',
     {
       include: nsPath
     }

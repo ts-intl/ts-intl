@@ -30,7 +30,7 @@ module.exports = {
         richNamePattern: projectConfig.integration.richNamePattern,
         namespaceDivider: projectConfig.syntax.nsDivider,
         keyDivider: projectConfig.syntax.keyDivider,
-        fullPath: projectConfig.path.dictionary,
+        localePath: projectConfig.path.dictionary,
         locale: projectConfig.locale.basic,
       },
     ],
@@ -48,7 +48,7 @@ module.exports = {
         richNamePattern: projectConfig.integration.richNamePattern,
         namespaceDivider: projectConfig.syntax.nsDivider,
         keyDivider: projectConfig.syntax.keyDivider,
-        fullPath: projectConfig.path.dictionary,
+        localePath: projectConfig.path.dictionary,
         locale: projectConfig.locale.basic,
       },
     ],
@@ -71,7 +71,7 @@ module.exports = {
         '@ts-intl/ts-intl/syntax-icu-json': [
           'error',
           {
-            fullPath: projectConfig.path.dictionary,
+            localePath: projectConfig.path.dictionary,
             locale: projectConfig.locale.basic,
             forbiddenPattern: `[${projectConfig.syntax.nsDivider}${projectConfig.syntax.keyDivider}]`,
           },
@@ -79,7 +79,7 @@ module.exports = {
         '@ts-intl/ts-intl/no-missing-keys-in-other-locales': [
           'warn',
           {
-            fullPath: projectConfig.path.dictionary,
+            localePath: projectConfig.path.dictionary,
             locale: projectConfig.locale.basic,
             otherLocales: projectConfig.locale.others,
             namespaceDivider: projectConfig.syntax.nsDivider,

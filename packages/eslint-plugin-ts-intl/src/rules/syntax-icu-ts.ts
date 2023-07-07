@@ -1,5 +1,5 @@
 import { TYPE } from '@formatjs/icu-messageformat-parser';
-import { getDictionaryControllerFsSingleton } from '@ts-intl/shared';
+import { DictionaryController } from '@ts-intl/shared';
 
 import { Node } from '../node';
 import { createRule, getSchema } from '../utils/eslint';
@@ -21,15 +21,20 @@ export const syntaxIcuTs = createRule({
       'richNamePattern',
       'namespaceDivider',
       'keyDivider',
-      'fullPath',
+      'localePath',
       'locale',
     ]),
   },
   create(context) {
-    const { fullPath, locale, keyDivider, namespaceDivider, richNamePattern } =
-      context.options[0] || {};
-    const baseController = getDictionaryControllerFsSingleton({
-      fullPath,
+    const {
+      localePath,
+      locale,
+      keyDivider,
+      namespaceDivider,
+      richNamePattern,
+    } = context.options[0] || {};
+    const baseController = DictionaryController.getControllerSingletonFs({
+      localePath,
       locale,
       watchMode: process.env.VSCODE_PID !== undefined,
     });

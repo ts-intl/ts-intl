@@ -1,9 +1,10 @@
 import {
   buildNSPathByKeys,
   Dictionary,
-  getDictionaryControllerFs,
+  DictionaryController,
   NSPath,
   Project,
+  Reader,
   readJsonFile,
 } from '@ts-intl/shared';
 
@@ -12,17 +13,17 @@ import { extractDictionaryFs } from './extractDictionaryFs';
 export const getDictionaryOfProject = (
   { projectConfig }: Pick<Project, 'projectConfig'>,
   optimize?: {
-    parseJsonFile?: (jsonPath: string) => Dictionary;
+    reader?: Reader<Dictionary>;
   }
 ): Dictionary =>
   Object.fromEntries(
     [projectConfig.locale.basic, ...projectConfig.locale.others].map(
       (locale) => [
         locale,
-        getDictionaryControllerFs({
-          fullPath: projectConfig.path.dictionary,
+        DictionaryController.getControllerFs({
+          localePath: projectConfig.path.dictionary,
           locale,
-          parseJsonFile: optimize?.parseJsonFile,
+          reader: optimize?.reader,
         }).dictionary,
       ]
     )
@@ -35,7 +36,7 @@ export const getLocaleDictionaryOfProject = (
   }: Pick<Project, 'projectConfig' | 'cacheFilePaths'>,
   locale: string,
   optimize?: {
-    parseJsonFile?: (jsonPath: string) => Dictionary;
+    reader?: Reader<Dictionary>;
     include?: NSPath;
     exclude?: NSPath;
     entry?: string;
@@ -43,24 +44,21 @@ export const getLocaleDictionaryOfProject = (
 ): Dictionary =>
   optimize?.include
     ? extractDictionaryFs({
-        root: projectConfig.path.dictionary,
-        lng: locale,
-        fallbackLng: projectConfig.locale.basic,
-        ns: {
-          include: optimize.entry
-            ? buildNSPathByKeys(
-                readJsonFile(cacheFilePaths.keysOfEntries)[optimize.entry] ??
-                  [],
-                projectConfig.syntax.nsDivider,
-                projectConfig.syntax.keyDivider
-              )
-            : optimize.include,
-          exclude: optimize.exclude,
-        },
-        parseJsonFile: optimize.parseJsonFile,
-      })
-    : getDictionaryControllerFs({
-        fullPath: projectConfig.path.dictionary,
+        localePath: projectConfig.path.dictionary,
         locale,
-        parseJsonFile: optimize?.parseJsonFile,
+        basicLocale: projectConfig.locale.basic,
+        include: optimize.entry
+          ? buildNSPathByKeys(
+              readJsonFile(cacheFilePaths.keysOfEntries)[optimize.entry] ?? [],
+              projectConfig.syntax.nsDivider,
+              projectConfig.syntax.keyDivider
+            )
+          : optimize.include,
+        exclude: optimize.exclude,
+        reader: optimize.reader,
+      })
+    : DictionaryController.getControllerFs({
+        localePath: projectConfig.path.dictionary,
+        locale,
+        reader: optimize?.reader,
       }).dictionary;

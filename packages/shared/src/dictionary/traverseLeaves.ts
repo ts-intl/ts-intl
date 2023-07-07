@@ -1,4 +1,4 @@
-import { Dictionary, ProjectConfig } from '../../types';
+import { Dictionary, ProjectConfig } from '../types';
 
 export const traverseLeaves = ({
   dictionary,

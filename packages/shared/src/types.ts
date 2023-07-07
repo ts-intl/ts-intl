@@ -15,6 +15,8 @@ export enum DictionaryParseErrorType {
   MissingValue = 4,
 }
 
+export type Reader<T> = (path: string, key?: string) => T;
+
 export type ProjectConfig = {
   path: {
     base: string;

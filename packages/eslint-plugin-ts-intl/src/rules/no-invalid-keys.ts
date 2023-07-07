@@ -1,6 +1,6 @@
 import {
+  DictionaryController,
   DictionaryParseErrorType,
-  getDictionaryControllerFsSingleton,
 } from '@ts-intl/shared';
 
 import { Node } from '../node';
@@ -24,20 +24,20 @@ export const noInvalidKeys = createRule({
       'namespaceDivider',
       'keyDivider',
       'fallbackNamespace',
-      'fullPath',
+      'localePath',
       'locale',
     ]),
   },
   create(context) {
     const {
-      fullPath,
+      localePath,
       locale,
       keyDivider,
       namespaceDivider,
       fallbackNamespace,
     } = context.options[0] || {};
-    const controller = getDictionaryControllerFsSingleton({
-      fullPath,
+    const controller = DictionaryController.getControllerSingletonFs({
+      localePath,
       locale,
       watchMode: process.env.VSCODE_PID !== undefined,
     });

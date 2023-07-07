@@ -146,7 +146,7 @@ const rule = {
       richNamePattern: '^rich$',
       namespaceDivider: '.',
       keyDivider: '.',
-      fullPath: '/src/locales',
+      localePath: '/src/locales',
       locale: 'en',
       fallbackNamespace: 'common',
     },
@@ -243,7 +243,7 @@ const rule = {
       richNamePattern: '^rich$',
       namespaceDivider: '.',
       keyDivider: '.',
-      fullPath: '/src/locales',
+      localePath: '/src/locales',
       locale: 'en',
     },
   ],
@@ -279,7 +279,7 @@ const eslintConfig = {
         '@ts-intl/ts-intl/no-missing-keys-in-other-locales': [
           'warn',
           {
-            fullPath: '/src/locales',
+            localePath: '/src/locales',
             locale: 'en',
             otherLocales: ['fr'],
             keyDivider: '.',
@@ -321,7 +321,7 @@ const eslintConfig = {
         '@ts-intl/ts-intl/syntax-icu-json': [
           'error',
           {
-            fullPath: '/src/locales',
+            localePath: '/src/locales',
             locale: 'en',
             forbiddenPattern: '\\.',
           },

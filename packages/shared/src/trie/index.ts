@@ -34,7 +34,7 @@ export const buildNSPathByKeys = (
   return buildNSPathByFlagDict(buildFlagDictByKeys(...args));
 };
 
-export const buildNSPathByFlagDict = (dict: FlagDict): NSPath => {
+const buildNSPathByFlagDict = (dict: FlagDict): NSPath => {
   const ns: NSPath = [];
   const stack = [ns];
 
@@ -55,7 +55,7 @@ export const buildNSPathByFlagDict = (dict: FlagDict): NSPath => {
   return ns;
 };
 
-export const buildFlagDictByKeys = (
+const buildFlagDictByKeys = (
   keys: string[],
   nsDivider: string,
   keyDivider: string
