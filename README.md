@@ -12,49 +12,6 @@ A full process toolchain to improve i18n performance and efficiency.
 | [@ts-intl/shared](packages/shared/)                               | [![npm version](https://badge.fury.io/js/@ts-intl%2Fshared.svg)](https://badge.fury.io/js/@ts-intl%2Fshared)                               |
 | [@ts-intl/translator](packages/translator/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Ftranslator.svg)](https://badge.fury.io/js/@ts-intl%2Ftranslator)                       |
 
-## SSR Integration
-
-### Cache dependencies when `npm prepare`
-
-```ts
-import { getDependenciesEnhancer, getDependenciesFs } from '@ts-intl/dependency';
-getDependenciesEnhancer(
-  getDependenciesFs(
-    entryDir,
-    {
-      madgeConfig,
-    },
-    syntaxConfig
-  )
-).then(({ graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys }) => {
-  return Promise.all([writeDiskCache(graphCachePath, graph), writeDiskCache(pkMapCachePath, pathIntlKeysMap), writeDiskCache(entryKeysCachePath, moduleIntlKeysMap), writeDiskCache(usedKeysCachePath, usedIntlKeys)]);
-});
-```
-
-### get server-side dictionary in each entry page
-
-```ts
-import { buildNSPathByKeys, Dictionary, NSPath } from '@ts-intl/shared';
-import { extractDictionaryFs } from '@ts-intl/dictionary';
-
-const getDictionary = (entryPath: string, locale = 'en') => {
-  const keys = readDiskCache(entryKeysCachePath)[entryPath] ?? [];
-  const nsPath = buildNSPathByKeys(
-    keys,
-    syntaxConfig.nsDivider,
-    syntaxConfig.keyDivider
-  );
-  return extractDictionaryFs({
-    localePath: resolve(process.cwd(), 'src/locales'),
-    locale,
-    basicLocale: 'en',
-    {
-      include: nsPath
-    }
-  });
-};
-```
-
 ## Shared Project Config(^1.1.0)
 
 ```ts
