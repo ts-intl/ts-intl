@@ -1,6 +1,5 @@
 import { extractDictionary } from '@ts-intl/dictionary';
-import { Dictionary, Project } from '@ts-intl/shared';
-import { writeFileWithDetection } from '@ts-intl/shared/dist/esm/fs';
+import { Dictionary, Project, writeFileWithDetection } from '@ts-intl/shared';
 import { join } from 'path';
 import { stringify } from 'safe-stable-stringify';
 

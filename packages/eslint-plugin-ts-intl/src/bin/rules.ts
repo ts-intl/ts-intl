@@ -1,5 +1,4 @@
-import { Project } from '@ts-intl/shared';
-import { writeFileWithDetection } from '@ts-intl/shared/dist/esm/fs';
+import { Project, writeFileWithDetection } from '@ts-intl/shared';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 

@@ -7,7 +7,7 @@ export const writeFileWithDetection = async (
   content: string,
   override: boolean
 ) => {
-  if (override && existsSync(path)) {
+  if (!override && existsSync(path)) {
     console.warn(`File ${path} already exists, ignore.`);
     return;
   }
