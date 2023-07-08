@@ -1,10 +1,13 @@
-import { promises } from 'fs';
-import { dirname } from 'path';
+import json5 from 'json5';
 
-export const writeJsonFile = async (path: string, obj: object) => {
-  const { mkdir, writeFile } = promises;
-  await mkdir(dirname(path), { recursive: true });
-  return writeFile(path, JSON.stringify(obj), {
-    encoding: 'utf-8',
-  });
-};
+import { writeFileWithDetection } from './writeFileWithDetection';
+
+export const writeJsonFile = (path: string, obj: object, override: boolean) =>
+  writeFileWithDetection(
+    path,
+    json5.stringify(obj, {
+      space: 2,
+      quote: '"',
+    }),
+    override
+  );

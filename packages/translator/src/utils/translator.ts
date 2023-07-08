@@ -1,6 +1,6 @@
 import { extractDictionary } from '@ts-intl/dictionary';
 import { Dictionary, Project } from '@ts-intl/shared';
-import { mkdir, writeFile } from 'fs/promises';
+import { writeFileWithDetection } from '@ts-intl/shared/dist/esm/fs';
 import { join } from 'path';
 import { stringify } from 'safe-stable-stringify';
 
@@ -69,10 +69,10 @@ export class Translator {
               this.project.projectConfig.path.dictionary,
               locale
             );
-            await mkdir(directory, { recursive: true });
-            return writeFile(
+            await writeFileWithDetection(
               join(directory, `${namespace}.json`),
-              stringify(child, undefined, 2)
+              stringify(child, undefined, 2),
+              true
             );
           })
         )

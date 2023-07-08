@@ -1,6 +1,6 @@
 import { Project } from '@ts-intl/shared';
-import { existsSync } from 'fs';
-import { copyFile, mkdir, readFile, writeFile } from 'fs/promises';
+import { writeFileWithDetection } from '@ts-intl/shared/dist/esm/fs';
+import { readFile } from 'fs/promises';
 import { join, relative } from 'path';
 
 const SHARED_FLOW_PATH = 'translator-shared.yml';
@@ -26,21 +26,16 @@ const init = async () => {
 };
 
 const writeFlow = async (localPath: string) => {
-  await mkdir(flowAbsolutePath, { recursive: true });
-  const sharedFlowPath = join(flowAbsolutePath, SHARED_FLOW_PATH);
-  if (!existsSync(sharedFlowPath)) {
-    await copyFile(sharedFlowTemplatePath, sharedFlowPath);
-  }
-  const defaultFlowPath = join(flowAbsolutePath, DEFAULT_FLOW_PATH);
-  if (!existsSync(defaultFlowPath)) {
-    await writeFile(
-      defaultFlowPath,
-      (
-        await readFile(flowTemplatePath, 'utf-8')
-      ).replace(/\[PATH\]/g, localPath),
-      'utf-8'
-    );
-  }
+  await writeFileWithDetection(
+    join(flowAbsolutePath, SHARED_FLOW_PATH),
+    await readFile(sharedFlowTemplatePath, 'utf-8'),
+    false
+  );
+  await writeFileWithDetection(
+    join(flowAbsolutePath, DEFAULT_FLOW_PATH),
+    (await readFile(flowTemplatePath, 'utf-8')).replace(/\[PATH\]/g, localPath),
+    false
+  );
 };
 
 init();

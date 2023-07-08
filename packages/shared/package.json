@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/shared",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
@@ -41,5 +41,8 @@
   "engines": {
     "node": ">=14.0.0",
     "pnpm": ">=7.0.0"
+  },
+  "dependencies": {
+    "json5": "^2.2.3"
   }
 }

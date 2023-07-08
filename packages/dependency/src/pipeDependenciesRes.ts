@@ -6,7 +6,7 @@ export const pipeDependenciesRes: PipeDependenciesRes<{
   modules: string[];
   pathIntlKeysMap: Record<string, string[]>;
   moduleIntlKeysMap: Record<string, string[]>;
-  usedIntlKeys: Record<string, boolean>;
+  usedIntlKeys: string[];
 }> = ({ modules, graph, pathIntlKeysMap }) => {
   const moduleIntlKeysMap = Object.fromEntries(
     modules.map((module) => [
@@ -15,14 +15,12 @@ export const pipeDependenciesRes: PipeDependenciesRes<{
     ])
   );
 
-  const usedIntlKeys = Object.fromEntries(
-    Array.from(
-      Object.values(moduleIntlKeysMap).reduce((all, keys) => {
-        keys.forEach((key) => all.add(key));
-        return all;
-      }, new Set<string>())
-    ).map((key) => [key, true])
-  );
+  const usedIntlKeys = [
+    ...Object.values(moduleIntlKeysMap).reduce((all, keys) => {
+      keys.forEach((key) => all.add(key));
+      return all;
+    }, new Set<string>()),
+  ];
 
   return {
     graph,

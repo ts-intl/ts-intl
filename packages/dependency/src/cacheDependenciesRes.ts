@@ -20,15 +20,16 @@ export const cacheDependenciesRes = async ({
       ...projectConfig.syntax,
     }
   );
-  const { graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys } =
+  const { graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys, modules } =
     pipeDependenciesRes(res);
   logEntriesDiff(moduleIntlKeysMap, cacheFilePaths.keysOfEntries);
-  return Promise.all([
-    writeJsonFile(cacheFilePaths.graph, graph),
-    writeJsonFile(cacheFilePaths.keysOfPaths, pathIntlKeysMap),
-    writeJsonFile(cacheFilePaths.keysOfEntries, moduleIntlKeysMap),
-    writeJsonFile(cacheFilePaths.usedKeys, usedIntlKeys),
+  await Promise.all([
+    writeJsonFile(cacheFilePaths.graph, graph, true),
+    writeJsonFile(cacheFilePaths.keysOfPaths, pathIntlKeysMap, true),
+    writeJsonFile(cacheFilePaths.keysOfEntries, moduleIntlKeysMap, true),
+    writeJsonFile(cacheFilePaths.usedKeys, usedIntlKeys, true),
   ]);
+  return { graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys, modules };
 };
 
 const logEntriesDiff = (

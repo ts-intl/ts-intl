@@ -155,9 +155,7 @@ pipeDependenciesRes(
     moduleIntlKeysMap: {
       [module: string]: string[]; // used intl key list of a module(include offspring of this module)
     };
-    usedIntlKeys: {
-      [intlKey: string]: boolean; // whether a intl key used in at least a module(entry)
-    };
+    usedIntlKeys: string[]; // all used intl keys
   }
 ```
 
