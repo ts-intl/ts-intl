@@ -19,7 +19,7 @@ pnpm i @ts-intl/translator
 Initialize config and git flow files of translator:
 
 ```bash
-npx ts-intl-init-translator --path=[yourLocalesPath]
+npx ts-intl-init-translator
 ```
 
 Generate translations manually:
@@ -84,35 +84,14 @@ OPENAI_API_KEY=you-api-key # sk-xxxx
 ## `ts-intl-translator.config.json`
 
 ```ts
-type ProjectConfig = {
-  path: string; // path of your locales directory
-  basicLanguage: string; // source language
-  languages: string[]; // languages to be translated
-  nsDivider: string; // namespace divider
-  keyDivider: string; // key divider
-  syntax: 'icu'; // syntax of source language phrases
-
-  descriptions: Record<string, string | undefined>;
-
-  // advanced
-  completionOptions?: {
-    preset?: {
-      // prepend messages to the prompt
-      override?: boolean;
-      presets?: {
-        role: 'system' | 'user' | 'assistant';
-        content: string;
-      }[];
-    };
-  };
-};
+type ProjectConfig
 ```
 
 Supported syntax list:
 
 1. [icu](https://unicode-org.github.io/icu/userguide/format_parse/messages/), another simple doc from [formatjs](https://formatjs.io/docs/core-concepts/icu-syntax/).
 
-`ProjectConfig['descriptions']`:
+`descriptions`:
 
 Provide the descriptions of the keys (optional), which will help AI generate more accurate translations.
 

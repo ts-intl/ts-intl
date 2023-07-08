@@ -45,7 +45,7 @@ const getDependencies = (
     pathIntlKeysMap: PathIntlKeysMap;
   },
   extractIntlKeysOpts?: {
-    funcNamePattern: string;
+    funcNamePattern?: string;
     hookNamePattern?: string;
     richNamePattern?: string;
     argIdx?: number;
@@ -61,27 +61,21 @@ const getDependencies = (
 ### Usage
 
 ```ts
-const { graph, pathIntlKeysMap, modules } = await getDependencies(
-  statuses,
-  entries,
-  { ...opts, ignoreCollectDeps: true },
-  ctx,
-  extractIntlKeysOpts
-);
+const { graph, pathIntlKeysMap, modules } = await getDependencies(statuses, entries, { ...opts, ignoreCollectDeps: true }, ctx, extractIntlKeysOpts);
 ```
 
 ### Configuration
 
-| Property                 | Type                                                                                                   | Default     | Description                                                                                                                                                                                      |
-| :----------------------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `statuses`               | `FileStatus[]`                                                                                         | `null`      | based on increment update, provide a file changed list to specify which files need to update                                                                                                     |
-| `entries`                | `string[]`                                                                                             | `null`      | absolute entry path list, to reduce unused result                                                                                                                                                |
-| `opts.extractIntlKeys`   | `(module: string) => string[] \| Promise<string[]>`                                                    | `undefined` | custom intl keys extract method, using built-in one if not provide                                                                                                                               |
-| `opts.ignoreCollectDeps` | `boolean`                                                                                              | `undefined` | whether re-collect dependency graph, provide `true` to improve performance                                                                                                                       |
-| `opts.madgeConfig`       | `MadgeConfig`                                                                                          | `null`      | visit [madge](https://github.com/pahen/madge). `baseDir` is required and should be absolute path of root of your project. The provided config would merge with default config and pass to madge. |
-| `ctx.graph`              | `DepsGraph`                                                                                            | `null`      | latest dependency graph of your project(before oldest modified time of `statuses`)                                                                                                               |
-| `ctx.pathIntlKeysMap`    | `PathIntlKeysMap`                                                                                      | `null`      | latest path-keys map of your project(before oldest modified time of `statuses`)                                                                                                                  |
-| `extractIntlKeysOpts`    | `{    funcNamePattern: string; hookNamePattern?: string; richNamePattern?: string; argIdx?: number; }` | `undefined` | localization function syntax config for built-in `extractIntlKeys`                                                                                                                               |
+| Property                 | Type                                                                                                    | Default     | Description                                                                                                                                                                                      |
+| :----------------------- | ------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `statuses`               | `FileStatus[]`                                                                                          | `null`      | based on increment update, provide a file changed list to specify which files need to update                                                                                                     |
+| `entries`                | `string[]`                                                                                              | `null`      | absolute entry path list, to reduce unused result                                                                                                                                                |
+| `opts.extractIntlKeys`   | `(module: string) => string[] \| Promise<string[]>`                                                     | `undefined` | custom intl keys extract method, using built-in one if not provide                                                                                                                               |
+| `opts.ignoreCollectDeps` | `boolean`                                                                                               | `undefined` | whether re-collect dependency graph, provide `true` to improve performance                                                                                                                       |
+| `opts.madgeConfig`       | `MadgeConfig`                                                                                           | `null`      | visit [madge](https://github.com/pahen/madge). `baseDir` is required and should be absolute path of root of your project. The provided config would merge with default config and pass to madge. |
+| `ctx.graph`              | `DepsGraph`                                                                                             | `null`      | latest dependency graph of your project(before oldest modified time of `statuses`)                                                                                                               |
+| `ctx.pathIntlKeysMap`    | `PathIntlKeysMap`                                                                                       | `null`      | latest path-keys map of your project(before oldest modified time of `statuses`)                                                                                                                  |
+| `extractIntlKeysOpts`    | `{    funcNamePattern?: string; hookNamePattern?: string; richNamePattern?: string; argIdx?: number; }` | `undefined` | localization function syntax config for built-in `extractIntlKeys`                                                                                                                               |
 
 ## getDependenciesByEntries
 
@@ -98,7 +92,7 @@ const getDependenciesByEntries = (
     madgeConfig: MadgeConfig;
   },
   extractIntlKeysOpts?: {
-    funcNamePattern: string;
+    funcNamePattern?: string;
     hookNamePattern?: string;
     richNamePattern?: string;
     argIdx?: number;
@@ -128,7 +122,7 @@ const getDependenciesFs = (
     madgeConfig: MadgeConfig;
   },
   extractIntlKeysOpts?: {
-    funcNamePattern: string;
+    funcNamePattern?: string;
     hookNamePattern?: string;
     richNamePattern?: string;
     argIdx?: number;
@@ -141,31 +135,28 @@ const getDependenciesFs = (
   }>;
 ```
 
-## getDependenciesEnhancer
+## pipeDependenciesRes
 
 > Return more useful information
 
 ### Interface
 
 ```ts
-const getDependenciesEnhancer = (
-  ctx: Promise<{
+pipeDependenciesRes(
+  res: {
     graph: DepsGraph;
     pathIntlKeysMap: PathIntlKeysMap;
     modules: string[];
-  }>
-) =>
-  Promise<{
+  }
+): {
     graph: DepsGraph;
     pathIntlKeysMap: PathIntlKeysMap;
     modules: string[];
     moduleIntlKeysMap: {
       [module: string]: string[]; // used intl key list of a module(include offspring of this module)
     };
-    usedIntlKeys: {
-      [intlKey: string]: boolean; // whether a intl key used in at least a module(entry)
-    };
-  }>;
+    usedIntlKeys: string[]; // all used intl keys
+  }
 ```
 
 ## License

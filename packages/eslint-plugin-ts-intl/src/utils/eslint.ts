@@ -20,7 +20,7 @@ export const defaultSchemaProperties = {
     type: 'string',
   },
 
-  namespaceDivider: {
+  nsDivider: {
     type: 'string',
   },
   keyDivider: {
@@ -30,14 +30,14 @@ export const defaultSchemaProperties = {
   fallbackNamespace: {
     type: 'string',
   },
-  fullPath: {
+  localePath: {
     type: 'string',
   },
   locale: {
     type: 'string',
   },
 
-  otherLocales: {
+  others: {
     type: 'array',
     items: { type: 'string' },
   },

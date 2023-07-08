@@ -3,7 +3,13 @@ import { relative, resolve } from 'path';
 
 import { applyActions } from './actions';
 import { extractIntlKeysFromCode as defaultCollectKeys } from './compiler/extractIntlKeysFromCode';
-import { ExtractIntlKeysOpts, FileStatus, IContext, IOpts } from './types';
+import {
+  ExtractIntlKeysOpts,
+  FileStatus,
+  GetDependenciesRes,
+  IContext,
+  IOpts,
+} from './types';
 import { extractPathIntlKeysMap, mergeMadgeConfig } from './utils';
 
 export const getDependencies = async (
@@ -14,7 +20,7 @@ export const getDependencies = async (
   },
   ctx: IContext,
   extractIntlKeysOpts?: ExtractIntlKeysOpts
-) => {
+): Promise<GetDependenciesRes> => {
   const { madgeConfig, extractIntlKeys, ...rest } = opts;
 
   const mergedOpts: IOpts = {

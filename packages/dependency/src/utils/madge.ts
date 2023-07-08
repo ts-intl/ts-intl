@@ -1,4 +1,4 @@
-import { DepsGraph, MadgeConfig } from '../types';
+import { DepsGraph, IOpts } from '../types';
 
 export const offsprings = (
   id: string,
@@ -15,7 +15,7 @@ export const offsprings = (
   return res;
 };
 
-export const mergeMadgeConfig = (config: MadgeConfig) => {
+export const mergeMadgeConfig = (config: IOpts['madgeConfig']) => {
   const tsConfig =
     typeof config.tsConfig === 'object'
       ? JSON.parse(JSON.stringify(config.tsConfig))

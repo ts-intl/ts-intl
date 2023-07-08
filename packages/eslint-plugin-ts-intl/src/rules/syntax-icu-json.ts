@@ -18,17 +18,17 @@ export const syntaxIcuJson = createRule({
       category: 'Best Practices',
       recommended: false,
     },
-    ...getSchema(['forbiddenPattern', 'fullPath', 'locale']),
+    ...getSchema(['forbiddenPattern', 'localePath', 'locale']),
   },
   create(context) {
     if (!context.parserServices.isJSON) {
       return {};
     }
     const filename = context.getFilename();
-    const { fullPath, locale, forbiddenPattern } = context.options[0] || {};
+    const { localePath, locale, forbiddenPattern } = context.options[0] || {};
     if (
-      filename !== join(fullPath, `${locale}.json`) &&
-      parse(filename).dir !== join(fullPath, locale)
+      filename !== join(localePath, `${locale}.json`) &&
+      parse(filename).dir !== join(localePath, locale)
     ) {
       return {};
     }

@@ -1,2 +1,2 @@
-export * from './dictionaryController';
-export * from './dictionaryControllerFs';
+export { DictionaryController } from './dictionaryController';
+export { dictionaryResolverFs } from './dictionaryResolverFs';

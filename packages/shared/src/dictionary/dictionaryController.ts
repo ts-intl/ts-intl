@@ -1,32 +1,49 @@
-import { Dictionary } from '../types';
-import { hasPathToLeaf, traverseLeaves } from './utils';
+import { readJsonFile } from '../fs';
+import { Dictionary, Reader } from '../types';
+import { dictionaryResolverFs } from './dictionaryResolverFs';
+import { dictionaryWatcherFs } from './dictionaryWatcherFs';
+import { hasPathToLeaf } from './hasPathToLeaf';
+import { traverseLeaves } from './traverseLeaves';
+import { DictionaryResolver, DictionaryWatcher } from './types';
 
-type Resolved = {
-  multiSources?: boolean;
-  localePath?: string;
-  dictionary?: Dictionary;
-};
-
-export interface DictionaryResolver {
-  (): Resolved;
-}
-
-export interface DictionaryWatcher {
-  (config: {
-    multiSources?: boolean;
-    localePath?: string;
-    updateDictionary: (dict?: Dictionary, overwrite?: boolean) => void;
-  }): () => void;
+interface FsOpts {
+  localePath: string;
+  locale: string;
+  reader?: Reader<Dictionary>;
+  watchMode?: boolean;
 }
 
 export class DictionaryController {
+  static singletonFs?: DictionaryController;
+  static getControllerFs({
+    localePath,
+    locale,
+    reader = readJsonFile,
+    watchMode = false, // watch only when run by vscode-eslint, command line should not watch which would cause eslint not exit
+  }: FsOpts) {
+    return new DictionaryController(
+      () => dictionaryResolverFs(localePath, locale, reader),
+      ({ multiSources, localePath, updateDictionary }) =>
+        dictionaryWatcherFs({
+          multiSources,
+          localePath,
+          updateDictionary,
+          watchMode,
+          reader,
+        })
+    );
+  }
+  static getControllerSingletonFs(opts: FsOpts) {
+    return (DictionaryController.singletonFs =
+      DictionaryController.singletonFs ??
+      DictionaryController.getControllerFs(opts));
+  }
+
   public dictionary: Dictionary = {};
   public closeWatcher?: () => void;
 
-  constructor(
-    { multiSources, localePath, dictionary }: Resolved,
-    watcher?: DictionaryWatcher
-  ) {
+  constructor(resolver: DictionaryResolver, watcher?: DictionaryWatcher) {
+    const { multiSources, localePath, dictionary } = resolver();
     this.dictionary = dictionary ?? this.dictionary;
     this.closeWatcher = watcher?.({
       multiSources,
@@ -70,10 +87,3 @@ export class DictionaryController {
     });
   };
 }
-
-export const getDictionaryController = (
-  resolver: DictionaryResolver,
-  watcher?: DictionaryWatcher
-) => {
-  return new DictionaryController(resolver(), watcher);
-};

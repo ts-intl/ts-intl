@@ -1,7 +1,7 @@
+import { config } from 'dotenv';
 import { OpenAIApi } from 'openai';
+import path from 'path';
 
-import { parseArgv } from './bin/parseArgv';
-import { setupEnvVariables } from './bin/setupEnvVariables';
 import { CompletionRes } from './types';
 import { getCompletion, initApi } from './utils/openai';
 import { createProgressBar } from './utils/progressBar';
@@ -111,9 +111,10 @@ const wrapCompletion = async ({
     {
       locale,
       content: originalContent,
-      description: translator.projectConfig.descriptions?.[path] ?? '',
+      description:
+        translator.project.projectConfig.translator?.descriptions?.[path] ?? '',
     },
-    translator.projectConfig.completionOptions
+    translator.project.projectConfig.translator?.completionOptions
   );
   if (error || !data) {
     return {
@@ -134,4 +135,31 @@ const wrapCompletion = async ({
       content: data.choices[0].message?.content,
     };
   }
+};
+
+export const parseArgv = () => {
+  const argv = process.argv.slice(2);
+  const opts: { env: 'development' | 'production' } = {
+    env: 'development',
+  };
+  for (const arg of argv) {
+    const [flag, value] = arg.split('=');
+    switch (flag) {
+      case '--env':
+        opts.env = value === 'production' ? 'production' : 'development';
+        break;
+      default:
+        break;
+    }
+  }
+  return opts;
+};
+
+const setupEnvVariables = (
+  env: 'development' | 'production',
+  root = process.cwd()
+) => {
+  config({
+    path: path.resolve(root, `.env.${env}`),
+  });
 };

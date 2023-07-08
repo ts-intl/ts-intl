@@ -24,13 +24,7 @@ npm install @ts-intl/dictionary
 ### Interface
 
 ```ts
-const extractDictionary = (
-  targetDict: Dictionary,
-  fallbackDict: Dictionary,
-  include: Trie | NSPath,
-  exclude?: Trie | NSPath,
-  logger?: (path: string) => void
-) => Dictionary;
+const extractDictionary = (targetDict: Dictionary, fallbackDict: Dictionary, include: Trie | NSPath, exclude?: Trie | NSPath, logger?: (path: string) => void) => Dictionary;
 ```
 
 ### Usage
@@ -57,12 +51,7 @@ const targetDict: Dictionary = {
 const include: NSPath = ['a', ['b'], 'e'];
 const exclude: NSPath = ['e', ['f']];
 
-const extractedDictionary = extractDictionary(
-  targetDict,
-  fallbackDict,
-  include,
-  exclude
-);
+const extractedDictionary = extractDictionary(targetDict, fallbackDict, include, exclude);
 // {
 //   'a': {
 //     'b': 'you are b'
@@ -89,14 +78,14 @@ const extractedDictionary = extractDictionary(
 
 ```ts
 type Configs = {
-  root: string;
-  lng: string;
-  fallbackLng?: string;
+  localePath: string;
+  locale: string;
+  basicLocale?: string;
   ns: {
     include: NSPath;
     exclude?: NSPath;
   };
-  parseJsonFile?: (jsonPath: string) => Dictionary;
+  reader?: Reader<Dictionary>;
 };
 const extractDictionaryFs = (configs: Configs) => Dictionary;
 ```
@@ -105,13 +94,13 @@ const extractDictionaryFs = (configs: Configs) => Dictionary;
 
 ```ts
 // auto detect locale files:
-// 1. if [root]/[locale] exist, merge [root]/[locale]/*.json, each json name is namespace.
-// 2. if [root]/[locale].json exist, just using it.
+// 1. if [localePath]/[locale] exist, merge [localePath]/[locale]/*.json, each json name is namespace.
+// 2. if [localePath]/[locale].json exist, just using it.
 // 3. otherwise return {}(empty Dictionary).
 const extractedDictionary = extractDictionaryFs({
-  root: '/',
-  lng: 'fr',
-  fallbackLng: 'en',
+  localePath: '/',
+  locale: 'fr',
+  basicLocale: 'en',
   ns: {
     include: ['a', ['b'], 'e'],
     exclude: ['e', ['f']],
@@ -123,22 +112,17 @@ const extractedDictionary = extractDictionaryFs({
 
 | Property      | Type                                    | Default     | Description                                               |
 | :------------ | --------------------------------------- | ----------- | --------------------------------------------------------- |
-| `root`        | `string`                                | `null`      | absolute path of locale directory                         |
-| `lng`         | `string`                                | `null`      | locale, should same as locale file name                   |
-| `fallbackLng` | `string`                                | `undefined` | fallback locale, should same as fallback locale file name |
+| `localePath`  | `string`                                | `null`      | absolute path of locale directory                         |
+| `locale`      | `string`                                | `null`      | locale, should same as locale file name                   |
+| `basicLocale` | `string`                                | `undefined` | fallback locale, should same as fallback locale file name |
 | `ns`          | `{ include: NSPath, exclude?: NSPath }` | `null`      | `include` and `exclude`                                   |
 
 ## Extend custom generator
 
 ```ts
-const getDictFromRemote = (lng: string) => Promise<Dictionary>;
+const getDictFromRemote = (locale: string) => Promise<Dictionary>;
 const customExtractDictionary = async () => {
-  return extractDictionary(
-    await getDictFromRemote('fr'),
-    await getDictFromRemote('en'),
-    ['a'],
-    ['a', ['b', 'c']]
-  );
+  return extractDictionary(await getDictFromRemote('fr'), await getDictFromRemote('en'), ['a'], ['a', ['b', 'c']]);
 };
 ```
 

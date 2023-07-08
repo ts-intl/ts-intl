@@ -1,11 +1,15 @@
-import { Dictionary, getDictionaryControllerFs } from '@ts-intl/shared';
+import {
+  Dictionary,
+  DictionaryController,
+  ProjectConfig,
+} from '@ts-intl/shared';
 
-import { ProjectConfig, TranslateNeeded } from '../types';
+import { TranslateNeeded } from '../types';
 
 export const getControllers = (config: ProjectConfig) =>
-  [config.basicLanguage, ...config.languages].map((locale) => ({
-    controller: getDictionaryControllerFs({
-      fullPath: config.path,
+  [config.locale.basic, ...config.locale.others].map((locale) => ({
+    controller: DictionaryController.getControllerFs({
+      localePath: config.path.dictionary,
       locale,
     }),
     locale,
@@ -17,15 +21,15 @@ export const extractMissingPairs = (
 ) => {
   const [base, ...others] = controllers;
   const missing: Record<string, TranslateNeeded[]> = Object.fromEntries(
-    config.languages.map((locale) => [locale, []])
+    config.locale.others.map((locale) => [locale, []])
   );
   base.controller.traverse(
     (path, value) => {
       others.forEach(({ controller, locale }) => {
         const { msg, errorType } = controller.hasPathToLeaf(
           path,
-          config.nsDivider,
-          config.keyDivider
+          config.syntax.nsDivider,
+          config.syntax.keyDivider
         );
         if (!errorType && msg) return;
         missing[locale].push({
@@ -34,8 +38,8 @@ export const extractMissingPairs = (
         });
       });
     },
-    config.nsDivider,
-    config.keyDivider
+    config.syntax.nsDivider,
+    config.syntax.keyDivider
   );
   return missing;
 };

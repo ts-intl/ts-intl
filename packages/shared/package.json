@@ -1,11 +1,14 @@
 {
   "name": "@ts-intl/shared",
-  "version": "0.2.2",
+  "version": "1.1.0",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
     "url": "https://github.com/ts-intl/ts-intl.git",
     "directory": "packages/shared"
+  },
+  "bin": {
+    "ts-intl-init": "./dist/cjs/bin/init.js"
   },
   "description": "",
   "keywords": [
@@ -29,10 +32,17 @@
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "typescript": "^4.9.4"
+  },
+  "peerDependencies": {
+    "typescript": "^4.9.4"
   },
   "engines": {
     "node": ">=14.0.0",
     "pnpm": ">=7.0.0"
+  },
+  "dependencies": {
+    "json5": "^2.2.3"
   }
 }

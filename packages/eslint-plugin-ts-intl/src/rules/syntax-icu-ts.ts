@@ -1,5 +1,5 @@
 import { TYPE } from '@formatjs/icu-messageformat-parser';
-import { getDictionaryControllerFsSingleton } from '@ts-intl/shared';
+import { DictionaryController } from '@ts-intl/shared';
 
 import { Node } from '../node';
 import { createRule, getSchema } from '../utils/eslint';
@@ -19,17 +19,17 @@ export const syntaxIcuTs = createRule({
       'funcNamePattern',
       'hookNamePattern',
       'richNamePattern',
-      'namespaceDivider',
+      'nsDivider',
       'keyDivider',
-      'fullPath',
+      'localePath',
       'locale',
     ]),
   },
   create(context) {
-    const { fullPath, locale, keyDivider, namespaceDivider, richNamePattern } =
+    const { localePath, locale, keyDivider, nsDivider, richNamePattern } =
       context.options[0] || {};
-    const baseController = getDictionaryControllerFsSingleton({
-      fullPath,
+    const baseController = DictionaryController.getControllerSingletonFs({
+      localePath,
       locale,
       watchMode: process.env.VSCODE_PID !== undefined,
     });
@@ -41,7 +41,7 @@ export const syntaxIcuTs = createRule({
         const key = getStaticLiteralValue(node.arguments[0] as Node);
         const { errorType, msg = '' } = baseController.hasPathToLeaf(
           key,
-          namespaceDivider,
+          nsDivider,
           keyDivider
         );
         // no-invalid-keys would handle invalid key
