@@ -128,6 +128,7 @@ export const withI18nDeps = (props: Omit<GetDepsProps[0], 'project'>, mode: GetD
     {
       ...props,
       rootDir: resolve(__dirname, '../../../'), // config your rootDir
+      isEntryDepsEnabled: process.env.NODE_ENV === 'production',
     },
     mode,
   );
