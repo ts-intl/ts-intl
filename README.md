@@ -4,13 +4,13 @@ A full process toolchain to improve i18n performance and efficiency.
 
 ## New~ All in one solution
 
-Please visit [@ts-intl/integration](packages/intergration/).
+Please visit [@ts-intl/integration](packages/integration/).
 
 ## Packages
 
 | Package                                                           | Version                                                                                                                                    |
 | :---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| [@ts-intl/integration](packages/intergration/)                    | [![npm version](https://badge.fury.io/js/@ts-intl%2Fintergration.svg)](https://badge.fury.io/js/@ts-intl%2Fintergration)                   |
+| [@ts-intl/integration](packages/integration/)                     | [![npm version](https://badge.fury.io/js/@ts-intl%2integration.svg)](https://badge.fury.io/js/@ts-intl%2Fintegration)                      |
 | [@ts-intl/dependency](packages/dependency/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Fdependency.svg)](https://badge.fury.io/js/@ts-intl%2Fdependency)                       |
 | [@ts-intl/dictionary](packages/dictionary/)                       | [![npm version](https://badge.fury.io/js/@ts-intl%2Fdictionary.svg)](https://badge.fury.io/js/@ts-intl%2Fdictionary)                       |
 | [@ts-intl/eslint-plugin-ts-intl](packages/eslint-plugin-ts-intl/) | [![npm version](https://badge.fury.io/js/@ts-intl%2Feslint-plugin-ts-intl.svg)](https://badge.fury.io/js/@ts-intl%2Feslint-plugin-ts-intl) |
