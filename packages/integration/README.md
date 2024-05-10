@@ -123,7 +123,7 @@ const intlUtilsServer = new IntlUtilsServer(languageConfig);
 export const getStaticPathsWithI18n = intlUtilsServer.getStaticPaths;
 
 type GetDepsProps = Parameters<typeof intlUtilsServer.withI18nDeps>;
-export const withI18nDeps = (props: Omit<GetDepsProps[0], 'project'>, mode: GetDepsProps[1] = 'ssg') =>
+export const withI18nDeps = (props: Omit<GetDepsProps[0], 'rootDir' | 'isEntryDepsEnabled'>, mode: GetDepsProps[1] = 'ssg') =>
   intlUtilsServer.withI18nDeps(
     {
       ...props,
