@@ -1,17 +1,23 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
-  },
   "files.associations": {
-    "turbo.json": "jsonc"
+    "*.json": "jsonc"
   },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "json5"
+  ],
   "cSpell.words": [
     "quasis",
     "formatjs",
@@ -22,13 +28,5 @@
   "files.exclude": {
     "**/.git": false
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "json",
-    "jsonc",
-    "json5",
-    "yaml",
-    "toml"
-  ]
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
