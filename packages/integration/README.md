@@ -3,6 +3,7 @@
 ## Start
 
 ```bash
+pnpm i @ts-intl/eslint-plugin-ts-intl --save-dev
 pnpm i eslint-plugin-jsonc --save-dev
 pnpm i @ts-intl/integration
 npx ts-intl-integrate
