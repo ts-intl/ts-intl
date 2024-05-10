@@ -1,0 +1,55 @@
+{
+  "name": "@ts-intl/integration",
+  "version": "1.1.0",
+  "author": "https://github.com/hakonleung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ts-intl/ts-intl.git",
+    "directory": "packages/integration"
+  },
+  "bin": {
+    "ts-intl-integrate": "./dist/cjs/bin/integrate.js",
+    "ts-intl-cache": "./dist/cjs/bin/cache.js",
+    "ts-intl-unused": "./dist/cjs/bin/unused.js"
+  },
+  "description": "",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "integration"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "license": "MIT",
+  "homepage": "",
+  "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/cjs && pnpm copy-templates",
+    "copy-templates": "copyfiles -u 1 src/templates/* dist/cjs && copyfiles -u 1 src/templates/* dist/esm",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "ts-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.9.4",
+    "copyfiles": "^2.4.1"
+  },
+  "peerDependencies": {
+    "typescript": "^4.9.4"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "pnpm": ">=7.0.0"
+  },
+  "dependencies": {
+    "json5": "^2.2.3",
+    "@ts-intl/shared": "workspace:*",
+    "@ts-intl/dictionary": "workspace:*",
+    "@ts-intl/dependency": "workspace:*"
+  }
+}
