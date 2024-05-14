@@ -270,7 +270,7 @@ Disallow missing keys in other locales.
 const eslintConfig = {
   overrides: [
     {
-      files: ['*.json', '*.json5'],
+      files: ['*.json'],
       parser: 'jsonc-eslint-parser',
       parserOptions: {
         jsonSyntax: 'JSON',
@@ -312,7 +312,7 @@ Disallow not icu style key-value in json. Open this rule when using [ICU Message
 const eslintConfig = {
   overrides: [
     {
-      files: ['*.json', '*.json5'],
+      files: ['*.json'],
       parser: 'jsonc-eslint-parser',
       parserOptions: {
         jsonSyntax: 'JSON',

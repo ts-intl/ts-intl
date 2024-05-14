@@ -1,3 +1,6 @@
 export { readJsonFile } from './readJsonFile';
-export { writeFileWithDetection } from './writeFileWithDetection';
-export { writeJsonFile } from './writeJsonFile';
+export {
+  writeFileWithDetection,
+  writeFileWithDetectionSync,
+} from './writeFileWithDetection';
+export { writeJsonFile, writeJsonFileSync } from './writeJsonFile';

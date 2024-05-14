@@ -1,0 +1,38 @@
+{
+  "path": {
+    "base": ".",
+    "dictionary": "locales",
+    "entry": "src",
+    "cache": ".i18n"
+  },
+  "locale": {
+    "basic": "en",
+    "others": ["ko"]
+  },
+  "syntax": {
+    "nsDivider": ".",
+    "keyDivider": "."
+  },
+  "integration": {
+    "funcNamePattern": "^(t|\\$t)$",
+    "hookNamePattern": "^useTranslations$",
+    "richNamePattern": "^rich$"
+  },
+  "translator": {
+    "completionOptions": {
+      "preset": {
+        "override": false
+      }
+    },
+    "descriptions": {}
+  },
+  "madgeConfig": {
+    "fileExtensions": ["ts", "tsx", "js", "jsx"],
+    "excludeRegExp": [],
+    "tsConfig": {
+      "compilerOptions": {
+        "paths": {}
+      }
+    }
+  }
+}

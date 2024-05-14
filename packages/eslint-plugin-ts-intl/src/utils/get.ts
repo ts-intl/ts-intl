@@ -1,6 +1,6 @@
 import { Rule } from 'eslint';
 
-import { Node } from '../node';
+import { FunctionLike, Node } from '../node';
 
 export const getNodeName = (context: Rule.RuleContext, node: Node): string => {
   if (node.type === 'Identifier') {
@@ -47,4 +47,29 @@ export const getStaticLiteralValue = (node: Node) => {
   }
   if (node.type === 'JSXText') return node.value || node.raw;
   return '';
+};
+
+export const getReactHookOrComponent = (
+  node: Node,
+): FunctionLike | undefined => {
+  let name: string | undefined;
+  let target: FunctionLike | undefined;
+  if (node.type === 'FunctionDeclaration') {
+    name = node.id?.name;
+    target = node;
+  } else if (
+    node.type === 'FunctionExpression' ||
+    node.type === 'ArrowFunctionExpression'
+  ) {
+    const parent = node.parent;
+    if (
+      parent?.type === 'VariableDeclarator' &&
+      parent.id.type === 'Identifier'
+    ) {
+      name = parent.id.name;
+      target = node;
+    }
+  }
+  if (!name?.match(/^(use|[A-Z])/)) return;
+  return target;
 };

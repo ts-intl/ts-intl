@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/eslint-plugin-ts-intl",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
   "homepage": "",
   "scripts": {
     "build": "tsc && tsc --module commonjs --outDir dist/cjs && pnpm copy-templates",
+    "watch": "chokidar 'src/**/*.ts' -c 'pnpm -wc exec turbo run build --filter=eslint-plugin-ts-intl'",
     "copy-templates": "copyfiles -u 1 src/templates/* dist/cjs && copyfiles -u 1 src/templates/* dist/esm",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "ts-check": "tsc --noEmit"

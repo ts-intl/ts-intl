@@ -16,4 +16,4 @@ const getUnusedKeys = () => {
   return unused;
 };
 
-console.log(getUnusedKeys());
+console.info(getUnusedKeys());

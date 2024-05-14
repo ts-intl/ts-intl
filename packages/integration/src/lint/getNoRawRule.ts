@@ -17,7 +17,7 @@ import {
 export const getNoRawRule = (
   {
     rootDir,
-    entry = '\\/ui\\/src',
+    entry,
   }: {
     rootDir: string;
     entry: string;
@@ -33,6 +33,12 @@ export const getNoRawRule = (
     ignoreUrlPatterns?: string[];
     matchedJSXAttrs?: string[];
     matchedPattern?: string;
+    autoFill?: {
+      package: string;
+      useTranslations: string;
+      fallbackNamespace: string;
+      tFunction: string;
+    };
   },
 ) => {
   const project = Project.getSingleton(rootDir);
@@ -51,6 +57,10 @@ export const getNoRawRule = (
             },
           ],
           matchedPattern: configs?.matchedPattern ?? matchedPattern,
+          autoFill: {
+            ...configs?.autoFill,
+            rootDir,
+          },
           ignoreNodes: [
             {
               type: 'JSXAttribute',

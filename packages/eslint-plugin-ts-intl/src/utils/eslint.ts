@@ -6,6 +6,18 @@ export const createRule = (rule: Rule.RuleModule) => {
 };
 
 export const defaultSchemaProperties = {
+  autoFill: {
+    type: 'object',
+    properties: {
+      rootDir: 'string',
+      package: 'string',
+      useTranslations: 'string',
+      tFunction: 'string',
+      fallbackNamespace: 'string',
+      additionalProperties: false,
+    },
+  },
+
   funcNamePattern: {
     type: 'string',
   },

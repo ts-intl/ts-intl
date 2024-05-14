@@ -6,9 +6,6 @@ const defaultRule = getDefaultRule(rootDir);
 const noRawRule = getNoRawRule(
   { rootDir, entry: '\\/src' },
   {
-    // additional configs
-
-    // experimental auto fix
     autoFill: {
       package: './useTranslations',
       useTranslations: 'useTranslations',

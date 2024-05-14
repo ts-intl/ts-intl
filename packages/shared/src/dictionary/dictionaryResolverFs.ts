@@ -8,7 +8,7 @@ export const dictionaryResolverFs = (
   localPath: string,
   locale: string,
   reader: Reader<Dictionary>,
-  include?: string[]
+  include?: string[],
 ): ReturnType<DictionaryResolver> => {
   try {
     const dirPath = resolve(localPath, locale);
@@ -29,7 +29,6 @@ export const dictionaryResolverFs = (
   } catch (err) {
     //
   }
-
   try {
     // [locale].json
     const jsonPath = resolve(localPath, `${locale}.json`);

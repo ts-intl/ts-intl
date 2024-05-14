@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/shared",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
   "scripts": {
     "build": "tsc && tsc --module commonjs --outDir dist/cjs",
     "lint": "eslint \"**/*.{ts,tsx}\"",
-    "ts-check": "tsc --noEmit"
+    "ts-check": "tsc --noEmit",
+    "watch": "chokidar 'src/**/*.ts' -c 'pnpm -wc exec turbo run build --filter=shared'"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
@@ -41,8 +42,5 @@
   "engines": {
     "node": ">=14.0.0",
     "pnpm": ">=7.0.0"
-  },
-  "dependencies": {
-    "json5": "^2.2.3"
   }
 }
