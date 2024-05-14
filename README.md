@@ -168,6 +168,58 @@ Recommend use it in `production`:
 
 Which would optimize dictionary size by only including keys which current page really used.
 
+## Work with VSC extension [`lokalise.i18n-ally`](https://github.com/lokalise/i18n-ally)
+
+Help to make project more substantial and efficient.
+
+![demo](./i18n-ally.png)
+
+`.vscode/settings.json`:
+
+```json
+{
+  "i18n-ally.localesPaths": ["src/locales"], // your locale dictionary path
+  "i18n-ally.enabledParsers": ["js", "ts", "json"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally.namespace": true,
+  "i18n-ally.extract.parsers.html": {
+    "attributes": ["text", "title", "alt", "placeholder", "label", "aria-label"], // you can add more
+    "ignoredTags": ["script", "style"], // you can add more
+    "inlineText": true
+  }
+}
+```
+
+`.vscode/extensions.json`:
+
+```json
+{
+  "recommendations": ["lokalise.i18n-ally"]
+}
+```
+
+`.vscode/i18n-ally-custom-framework.yml`:
+
+```yml
+# .vscode/i18n-ally-custom-framework.yml
+languageIds:
+  - javascript
+  - typescript
+  - javascriptreact
+  - typescriptreact
+
+usageMatchRegex:
+  # The following example shows how to detect `t("your.i18n.keys")`
+  # the `{key}` will be placed by a proper keypath matching regex,
+  # you can ignore it and use your own matching rules as well
+  - "[^\\w\\d]t\\(['\"`]({key})['\"`]"
+  - "[^\\w\\d]t\\.rich\\(['\"`]({key})['\"`]"
+
+# If set to true, only enables this custom framework (will disable all built-in frameworks)
+monopoly: true
+```
+
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

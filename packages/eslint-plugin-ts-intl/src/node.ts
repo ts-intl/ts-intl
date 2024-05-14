@@ -42,4 +42,19 @@ export type Node =
   | Rule.Node
   | (JSXText & { parent: Node })
   | (TSLiteralType & { parent: Node })
-  | (JSXAttribute & { parent: Node });
+  | (JSXAttribute & { parent: Node; name: { name: string } });
+
+export type Program = Node & {
+  type: 'Program';
+};
+
+export type FunctionLike = Node & {
+  type:
+    | 'FunctionDeclaration'
+    | 'FunctionExpression'
+    | 'ArrowFunctionExpression';
+};
+
+export type Text = Node & {
+  type: 'Literal' | 'TemplateLiteral' | 'JSXText';
+};

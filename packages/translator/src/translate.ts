@@ -19,8 +19,8 @@ export const translate = async () => {
       Object.entries(translator.missing).map(([locale, items]) => [
         locale,
         { total: items.length },
-      ])
-    )
+      ]),
+    ),
   );
   const failed = Object.fromEntries(
     Object.keys(translator.missing).map((locale) => [
@@ -34,7 +34,7 @@ export const translate = async () => {
           note?: string;
         }>(),
       },
-    ])
+    ]),
   );
   const promises: Promise<void>[] = [];
 
@@ -63,7 +63,7 @@ export const translate = async () => {
             bars[locale].increment(1, { failed: failed[locale].count });
             translator.updateTranslated(locale, path, content, false);
           }
-        })
+        }),
       );
     }
   }
@@ -75,8 +75,8 @@ export const translate = async () => {
   Object.entries(failed).forEach(([locale, { addition }]) => {
     addition.forEach(({ content, note, path, error }) => {
       const message = error instanceof Error ? error.message : error;
-      console.log(
-        `Failed | ${locale} | ${path} | ${content} | ${note} | ${message}`
+      console.error(
+        `Failed | ${locale} | ${path} | ${content} | ${note} | ${message}`,
       );
     });
   });
@@ -114,7 +114,7 @@ const wrapCompletion = async ({
       description:
         translator.project.projectConfig.translator?.descriptions?.[path] ?? '',
     },
-    translator.project.projectConfig.translator?.completionOptions
+    translator.project.projectConfig.translator?.completionOptions,
   );
   if (error || !data) {
     return {
@@ -157,7 +157,7 @@ export const parseArgv = () => {
 
 const setupEnvVariables = (
   env: 'development' | 'production',
-  root = process.cwd()
+  root = process.cwd(),
 ) => {
   config({
     path: path.resolve(root, `.env.${env}`),

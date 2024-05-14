@@ -42,7 +42,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.json', '*.json5'],
+      files: ['*.json'],
       parser: 'jsonc-eslint-parser',
       parserOptions: {
         jsonSyntax: 'JSON',

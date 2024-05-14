@@ -18,7 +18,7 @@ export const cacheDependenciesRes = async ({
     {
       ...projectConfig.integration,
       ...projectConfig.syntax,
-    }
+    },
   );
   const { graph, pathIntlKeysMap, moduleIntlKeysMap, usedIntlKeys, modules } =
     pipeDependenciesRes(res);
@@ -34,7 +34,7 @@ export const cacheDependenciesRes = async ({
 
 const logEntriesDiff = (
   modulesUsedKeys: Record<string, string[] | undefined>,
-  keysOfEntries: string
+  keysOfEntries: string,
 ) => {
   let old: typeof modulesUsedKeys = {};
   try {
@@ -43,6 +43,6 @@ const logEntriesDiff = (
     // console.error(err);
   }
   Object.entries(modulesUsedKeys).forEach(([module, keys]) => {
-    console.log(module, old[module]?.length ?? 0, '=>', keys?.length ?? 0);
+    console.info(module, old[module]?.length ?? 0, '=>', keys?.length ?? 0);
   });
 };

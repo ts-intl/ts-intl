@@ -1,13 +1,14 @@
-import json5 from 'json5';
-
-import { writeFileWithDetection } from './writeFileWithDetection';
+import {
+  writeFileWithDetection,
+  writeFileWithDetectionSync,
+} from './writeFileWithDetection';
 
 export const writeJsonFile = (path: string, obj: object, override: boolean) =>
-  writeFileWithDetection(
-    path,
-    json5.stringify(obj, {
-      space: 2,
-      quote: '"',
-    }),
-    override
-  );
+  writeFileWithDetection(path, JSON.stringify(obj, undefined, 2), override);
+
+export const writeJsonFileSync = (
+  path: string,
+  obj: object,
+  override: boolean,
+) =>
+  writeFileWithDetectionSync(path, JSON.stringify(obj, undefined, 2), override);

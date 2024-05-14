@@ -11,13 +11,7 @@
   "files.associations": {
     "*.json": "jsonc"
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "json",
-    "jsonc",
-    "json5"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "json", "jsonc"],
   "cSpell.words": [
     "quasis",
     "formatjs",
@@ -28,5 +22,25 @@
   "files.exclude": {
     "**/.git": false
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "i18n-ally.localesPaths": ["packages/playground/locales"],
+  "i18n-ally.enabledParsers": ["js", "ts", "json"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally.namespace": true,
+  "i18n-ally.extract.parsers.html": {
+    "attributes": [
+      "text",
+      "title",
+      "alt",
+      "placeholder",
+      "label",
+      "aria-label"
+    ],
+    "ignoredTags": ["script", "style"],
+    "inlineText": true
+  },
+  "i18n-ally.regex.key": "[\\w\\d\\. \\-\\[\\]']*?",
+  "i18n-ally.displayLanguage": "en"
 }
