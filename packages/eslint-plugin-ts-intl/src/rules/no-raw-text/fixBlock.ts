@@ -1,3 +1,5 @@
+import { Rule } from 'eslint';
+
 import { FunctionLike } from '../../node';
 import { getReactHookOrComponent } from '../../utils/get';
 import { FixGetter } from './types';
@@ -21,26 +23,12 @@ const _fixBlock: FixGetter<FunctionLike> = ({
 }) => {
   const body = node.body;
   if (body.type !== 'BlockStatement') {
-    let raw = context.getSourceCode().getText(body, 1, 1);
-    const range = body.range as [number, number];
-    if (raw[0] === '(') {
-      range[0] -= 1;
-    } else {
-      raw = raw.slice(1);
-    }
-    if (raw[raw.length - 1] === ')') {
-      range[1] += 1;
-    } else {
-      raw = raw.slice(0, -1);
-    }
-    if (preFix) {
-      const preLen = preFix.range[0] - range[0];
-      const sufLen = range[1] - preFix.range[1];
-      raw = raw.slice(0, preLen) + preFix.text + raw.slice(raw.length - sufLen);
-    }
+    const funcRange = node.range as [number, number];
+    const funcHead = extractFuncHead(context, node);
+    const bodyRaw = extractFuncBodyRaw(context, body, preFix);
     return fixer.replaceTextRange(
-      range,
-      `{ const ${opts.tFunction} = ${opts.useTranslations}();\n return ${raw}; }`,
+      funcRange,
+      `${funcHead} { const ${opts.tFunction} = ${opts.useTranslations}();\n return ${bodyRaw}; }`,
     );
   }
   if (
@@ -57,9 +45,59 @@ const _fixBlock: FixGetter<FunctionLike> = ({
       );
     })
   )
-    return;
+    return; // tFunction existed
   return fixer.insertTextBefore(
     body.body[0],
     `const ${opts.tFunction} = ${opts.useTranslations}();\n`,
   );
+};
+
+const extractFuncHead = (context: Rule.RuleContext, node: FunctionLike) => {
+  const funcRaw = context.getSourceCode().getText(node);
+  let funcHead = '';
+  if (node.type === 'ArrowFunctionExpression') {
+    for (let i = 0; i < funcRaw.length; i += 1) {
+      if (funcRaw[i] === '=' && funcRaw[i + 1] === '>') {
+        funcHead = funcRaw.slice(0, i + 2);
+        break;
+      }
+    }
+  } else {
+    let c = 0;
+    for (let i = 0; i < funcRaw.length; i += 1) {
+      if (funcRaw[i] === '(') {
+        c += 1;
+      } else if (funcRaw[i] === ')') {
+        c -= 1;
+        if (c === 0) {
+          funcHead = funcRaw.slice(0, i + 1);
+          break;
+        }
+      }
+    }
+  }
+  return funcHead;
+};
+
+const extractFuncBodyRaw = (
+  context: Rule.RuleContext,
+  body: FunctionLike['body'],
+  preFix: Rule.Fix | undefined,
+) => {
+  let bodyRaw = context.getSourceCode().getText(body);
+  const bodyRange = body.range as [number, number];
+  if (
+    preFix &&
+    preFix.range[0] >= bodyRange[0] &&
+    preFix.range[1] <= bodyRange[1]
+  ) {
+    // pre fix is in body, so should apply text replacement
+    const preLen = preFix.range[0] - bodyRange[0];
+    const sufLen = bodyRange[1] - preFix.range[1];
+    bodyRaw =
+      bodyRaw.slice(0, preLen) +
+      preFix.text +
+      bodyRaw.slice(bodyRaw.length - sufLen);
+  }
+  return bodyRaw;
 };

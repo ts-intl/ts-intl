@@ -33,3 +33,5 @@ yarn-error.log*
 husky.sh
 
 **/dist
+
+playground-test.tsx

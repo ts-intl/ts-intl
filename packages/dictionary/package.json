@@ -26,6 +26,7 @@
   "homepage": "",
   "scripts": {
     "build": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "watch": "chokidar 'src/**/*.ts' -c 'pnpm -wc exec turbo run build --filter=dictionary'",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "ts-check": "tsc --noEmit"
   },

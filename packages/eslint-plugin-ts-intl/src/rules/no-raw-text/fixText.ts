@@ -33,8 +33,12 @@ const getGenT = (node: Text) => {
   if (!value) return;
   return {
     value,
-    genT: (key: string) =>
-      params.length ? `t('${key}', {${params.join(', ')}})` : `t('${key}')`,
+    genT: (key: string) => {
+      const escaped = JSON.stringify(key);
+      return params.length
+        ? `t(${escaped}, {${[...new Set(params)].join(', ')}})`
+        : `t(${escaped})`;
+    },
   };
 };
 
@@ -48,7 +52,7 @@ const getPathByValue = (value: string, opts: AutoFillOpts) => {
   const { nsDivider, keyDivider } = project.projectConfig.syntax;
   const key = value.replace(
     new RegExp(`[${nsDivider}${keyDivider}]`, 'g'),
-    ' ',
+    '_',
   );
   const existed: string[] = [];
   controller.traverse(
