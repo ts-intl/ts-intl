@@ -15,10 +15,15 @@ export const genFix = (
   if (!isAutoFillOpts(opts)) return;
   const fix: Rule.ReportDescriptor['fix'] = (fixer: Rule.RuleFixer) => {
     let cur = node;
+    let pre: Node | undefined;
     let target: FunctionLike | undefined;
     while (cur) {
-      target = getReactHookOrComponent(cur);
-      if (target) break;
+      const hookOrComponent = getReactHookOrComponent(cur);
+      if (hookOrComponent && pre === hookOrComponent.body) {
+        target = hookOrComponent;
+        break;
+      }
+      pre = cur;
       cur = cur.parent;
     }
     if (!target) return [];
