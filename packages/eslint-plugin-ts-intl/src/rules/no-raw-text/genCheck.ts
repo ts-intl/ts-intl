@@ -77,4 +77,11 @@ export const checkIsPotentialAssignment = (node: Node) => {
     node.parent.body === node
   )
     return true;
+  if (node.parent.type === 'ReturnStatement' && node === node.parent.argument)
+    return true;
+  if (
+    node.parent.type === 'JSXExpressionContainer' &&
+    node === node.parent.expression
+  )
+    return true;
 };
