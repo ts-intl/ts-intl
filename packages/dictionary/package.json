@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/dictionary",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
@@ -35,11 +35,7 @@
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "typescript": "^4.9.4"
-  },
-  "peerDependencies": {
-    "typescript": "^4.9.4"
+    "tsconfig": "workspace:*"
   },
   "engines": {
     "node": ">=14.0.0",
