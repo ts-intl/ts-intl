@@ -1,6 +1,6 @@
 {
   "name": "playground",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "devDependencies": {
     "@ts-intl/eslint-plugin-ts-intl": "workspace:*",
@@ -9,8 +9,5 @@
     "eslint-config-custom": "workspace:*",
     "eslint-plugin-jsonc": "^2.7.0",
     "tsconfig": "workspace:*"
-  },
-  "peerDependencies": {
-    "typescript": "^4.9.4"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/integration",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
@@ -36,11 +36,11 @@
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^4.9.4",
+    "typescript": "^5.0.2",
     "copyfiles": "^2.4.1"
   },
   "peerDependencies": {
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.2"
   },
   "engines": {
     "node": ">=14.0.0",
