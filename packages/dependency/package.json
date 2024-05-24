@@ -1,6 +1,6 @@
 {
   "name": "@ts-intl/dependency",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "https://github.com/hakonleung",
   "repository": {
     "type": "git",
@@ -34,11 +34,11 @@
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {
-    "madge": "^5.0.1",
+    "madge": "^7.0.0",
     "@ts-intl/shared": "workspace:*"
   },
   "devDependencies": {
-    "@types/madge": "^5.0.0",
+    "@types/madge": "^5.0.3",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.0.2"
