@@ -10,7 +10,10 @@ import { Translator } from './utils/translator';
 export const translate = async () => {
   setupEnvVariables(parseArgv().env);
 
-  const api = initApi(process.env.OPENAI_API_KEY);
+  const api = initApi(
+    process.env.OPENAI_API_KEY,
+    process.env.OPENAI_API_BASE_PATH,
+  );
 
   const translator = new Translator();
 

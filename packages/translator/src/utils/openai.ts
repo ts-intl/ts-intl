@@ -3,19 +3,20 @@ import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 
 import { CompletionMsg } from '../types';
 
-export const initApi = (apiKey?: string) => {
+export const initApi = (apiKey?: string, basePath?: string) => {
   if (!apiKey) return;
   return new OpenAIApi(
     new Configuration({
       apiKey,
-    })
+      basePath,
+    }),
   );
 };
 
 export const getCompletion = async (
   instance: OpenAIApi,
   msg: CompletionMsg,
-  opts?: NonNullable<ProjectConfig['translator']>['completionOptions']
+  opts?: NonNullable<ProjectConfig['translator']>['completionOptions'],
 ): Promise<{
   data?: Awaited<ReturnType<OpenAIApi['createChatCompletion']>>['data'];
   error?: unknown;
@@ -23,13 +24,13 @@ export const getCompletion = async (
   try {
     const { data } = await instance.createChatCompletion(
       {
-        model: 'gpt-3.5-turbo',
+        model: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
         max_tokens: 1000,
         messages: [...combineContexts(opts?.preset), parseMsg(msg)],
       },
       {
         timeout: 30000,
-      }
+      },
     );
     return {
       data,
@@ -42,7 +43,7 @@ export const getCompletion = async (
 const combineContexts = (
   preset: NonNullable<
     NonNullable<ProjectConfig['translator']>['completionOptions']
-  >['preset'] = {}
+  >['preset'] = {},
 ): ChatCompletionRequestMessage[] => {
   const { override, presets = [] } = preset;
   const context = override ? [] : [CONTEXT_1, CONTEXT_2];
@@ -72,7 +73,7 @@ const CONTEXT_1: ChatCompletionRequestMessage = {
   Before you return the answer, you should re-translate until meaning of the translation and the content are the same.
 
   Do not include any explanations or notes.
-  
+
   Only provide a RFC8259 compliant JSON response with the following structure delimited by third backticks:
   \`\`\`
   {

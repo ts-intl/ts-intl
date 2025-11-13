@@ -14,6 +14,8 @@ jobs:
 
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_API_BASE_PATH: ${{ secrets.OPENAI_API_BASE_PATH }}
+      OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
 
     steps:
       - uses: actions/checkout@v3

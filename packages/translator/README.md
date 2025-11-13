@@ -72,14 +72,17 @@ The action would add commit `feat: [AI Generated] translations` to your branch. 
 
 To enable AI translation:
 
-- Setup `process.env.OPENAI_API_KEY`.
+- Setup `process.env.OPENAI_API_KEY`, `process.env.OPENAI_API_BASE_PATH`, `process.env.OPENAI_MODEL`.
 - Create `.env.development` and `.env.production` with:
 
 ```env
 OPENAI_API_KEY=you-api-key # sk-xxxx
+
+OPENAI_API_BASE_PATH=your-api-base-path # optional
+OPENAI_MODEL=your-model # optional
 ```
 
-- Setup `secrets.OPENAI_API_KEY` of your Github repo.
+- Setup `secrets.OPENAI_API_KEY` and others of your Github repo.
 
 ## `ts-intl-translator.config.json`
 
