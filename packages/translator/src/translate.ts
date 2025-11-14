@@ -2,8 +2,7 @@ import { config } from 'dotenv';
 import { OpenAIApi } from 'openai';
 import path from 'path';
 
-import { CompletionRes } from './types';
-import { getCompletion, initApi } from './utils/openai';
+import { getCompletion, initApi, parseResponseContent } from './utils/openai';
 import { createProgressBar } from './utils/progressBar';
 import { Translator } from './utils/translator';
 
@@ -125,14 +124,34 @@ const wrapCompletion = async ({
     };
   }
   try {
-    const parsed: CompletionRes = data.choices[0].message?.content
-      ? JSON.parse(data.choices[0].message.content)
-      : { translation: '' };
+    const rawContent = data.choices[0].message?.content;
+    console.log(`🔍 Response: ${locale} | ${path} | "${rawContent}"`);
+
+    if (!rawContent) {
+      console.log(`❌ Response is empty: ${locale} | ${path}`);
+      return {
+        error: 'Empty response content',
+        content: '',
+      };
+    }
+
+    // Supports multiple formats
+    const parsed = parseResponseContent(rawContent);
+
+    console.log(
+      `✅ Translation successful: ${locale} | ${path} | "${parsed.translation}" ${
+        parsed.note ? `| notes: "${parsed.note}"` : ''
+      }`,
+    );
     return {
       content: parsed.translation,
       note: parsed.note,
     };
   } catch (error) {
+    console.log(
+      `❌ Response parsing failed: ${locale} | ${path} | Original content: "${data.choices[0].message?.content}" | Error:`,
+      error,
+    );
     return {
       error,
       content: data.choices[0].message?.content,
