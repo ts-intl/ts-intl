@@ -13,6 +13,66 @@ export const initApi = (apiKey?: string, basePath?: string) => {
   );
 };
 
+/**
+ * Parse AI response content, supporting multiple formats
+ * Priority order: JSON > JSON in Markdown code blocks > Plain text
+ */
+export const parseResponseContent = (
+  content: string,
+): { translation: string; note?: string } => {
+  if (!content || content.trim() === '' || content === 'undefined') {
+    console.log('⚠️ Response content is empty or invalid');
+    return { translation: '' };
+  }
+
+  console.log(
+    '🔍 Start parsing response content:',
+    content.substring(0, 200) + '...',
+  );
+
+  // 1. Try to parse as JSON
+  try {
+    const parsed = JSON.parse(content.trim());
+    console.log('✅ Successfully parsed as direct JSON:', parsed);
+    return {
+      translation: parsed.translation || parsed.content || '',
+      note: parsed.note,
+    };
+  } catch (e) {
+    console.log('📝 Direct JSON parsing failed, trying other formats');
+  }
+
+  // 2. Try to extract JSON from Markdown code blocks
+  const jsonBlockMatch = content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/i);
+  if (jsonBlockMatch) {
+    try {
+      const parsed = JSON.parse(jsonBlockMatch[1].trim());
+      console.log(
+        '✅ Successfully extracted JSON from Markdown code block:',
+        parsed,
+      );
+      return {
+        translation: parsed.translation || parsed.content || '',
+        note: parsed.note,
+      };
+    } catch (e) {
+      console.log('❌ Failed to parse JSON from Markdown:', e);
+    }
+  }
+
+  // 3. Try to extract quoted content
+  const quotedMatch = content.match(/"([^"]+)"/);
+  if (quotedMatch) {
+    console.log('✅ Successfully extracted quoted content:', quotedMatch[1]);
+    return { translation: quotedMatch[1] };
+  }
+
+  // 4. Translate the entire response (remove extraneous whitespace)
+  const cleanContent = content.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' ');
+  console.log('📄 Using cleaned plain text content:', cleanContent);
+  return { translation: cleanContent };
+};
+
 export const getCompletion = async (
   instance: OpenAIApi,
   msg: CompletionMsg,
